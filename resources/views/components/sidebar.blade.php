@@ -36,6 +36,13 @@
         </ul>
     </div>
 
+    <a href="/admin/penggunaJasa">
+        <div class="box-admin-akun">
+            <i class="fas fa-file-alt"></i>
+            <h4>Uji Kelayakan</h4>
+        </div>
+    </a>
+
     <a href="/admin/lapor">
         <div class="box-admin-akun">
             <i class="fas fa-file-alt"></i>

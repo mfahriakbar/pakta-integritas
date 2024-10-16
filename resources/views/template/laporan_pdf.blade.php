@@ -34,7 +34,7 @@
         .title-surat h2 {
             text-align: center;
             font-size: 14pt;
-            margin-top: 20%;
+            margin-top: 25%;
             margin-bottom: 20px;
             text-transform: uppercase;
         }

@@ -23,7 +23,7 @@
                 <h3>Formulir Lapor Suap Pungli & Gratifikasi</h3>
 
                 <div class="header-image">
-                    <img src="{{ asset('assets/kop.png') }}" alt="Kop Surat"
+                    <img src="{{ asset('assets/kop-surat.png') }}" alt="Kop Surat"
                         style="width: 100%; height: auto; display: block; margin: 0 auto;" />
                 </div>
                 <input type="hidden" name="is_admin" value="false">

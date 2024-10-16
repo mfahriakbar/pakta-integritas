@@ -207,7 +207,7 @@ class LaporSpgController extends Controller
         $judul = 'Laporan SPG';
 
         // Path ke gambar kop surat yang akan digunakan dalam surat
-        $path = public_path('assets/kop.png');
+        $path = public_path('assets/kop-surat.png');
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $dataGambar = file_get_contents($path);
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($dataGambar);
