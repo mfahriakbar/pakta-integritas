@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 
-@section('title', 'Tabel Lapor Spg')
+@section('title', 'Tabel Lapor K3')
 
 @section('content')
 
 <header>
-    <h1>Tabel Formulir Lapor Spg</h1>
+    <h1>Tabel Formulir Lapor K3</h1>
 </header>
 <hr class="header-line">
 <!-- Panggil komponen search section -->

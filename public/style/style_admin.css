@@ -330,39 +330,45 @@ nav {
     position: relative;
 }
 
-.dropdown-admin * {
+/* Global Styles */
+.dropdown-admin, .dropdown-uji-kelayakan {
+    width: 100%;
+    position: relative;
+}
+
+.dropdown-admin * , .dropdown-uji-kelayakan * {
     box-sizing: border-box;
 }
 
-.select-admin {
+/* Styles for Select Element */
+.select-admin, .select-uji-kelayakan {
     color: #fff;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.3s, color 0.3s; /* Added color transition */
     margin: 0;
 }
 
-.select-admin h4 {
+.select-admin h4, .select-uji-kelayakan h4 {
     margin-right: 13px;
 }
-.select-admin:hover {
-    background: #fff;
-    color: #0077b6;
+
+/* Hover Effects */
+.select-admin:hover, .select-uji-kelayakan:hover {
+    background: #0077b6; /* Changed hover background */
+    color: #fff; /* Changed hover text color */
 }
 
-.caret:hover {
-    background: #fff;
-    color: #0077b6;
-}
-
-.select-admin .fa-caret-down-rotate {
+/* Caret Rotation */
+.select-admin .fa-caret-down-rotate, .select-uji-kelayakan .fa-caret-down-rotate {
     transform: rotate(180deg);
 }
 
-.menu-admin {
+/* Dropdown Menu Styles */
+.menu-admin, .menu-uji-kelayakan {
     list-style: none;
     padding: 10px;
     color: #fff;
@@ -373,31 +379,39 @@ nav {
     transform: translateX(-50%);
     opacity: 0;
     display: none;
-    transition: 0.2;
+    transition: opacity 0.3s ease-in-out; /* Adjusted transition for smoothness */
     z-index: 1;
 }
 
-.menu-admin li {
-    padding: 10px;
-    cursor: pointer;
-    width: 100%;
+.menu-admin, .menu-uji-kelayakan a {
     color: #fff;
 }
 
-.menu-admin li:hover {
+/* Menu Item Styles */
+.menu-admin li, .menu-uji-kelayakan li {
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.3s, color 0.3s; /* Added transition for menu items */
+}
+
+.menu-admin li:hover, .menu-uji-kelayakan li:hover {
     background: #fff;
     color: #0077b6;
 }
 
-.menu-admin-open {
+/* Open State */
+.menu-admin-open, .menu-uji-kelayakan-open {
     display: block;
     opacity: 1;
 }
 
+/* Active State for Selected Option */
 .active {
     background-color: #0e8345;
 }
 
+/* Admin Content Area */
 .content-admin {
     margin-left: 220px;
     padding: 50px;
@@ -405,6 +419,19 @@ nav {
     background-color: #fff;
     border-radius: 10px;
     min-width: calc(100% - 220px);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .sidebar-admin {
+        width: 100%;
+        position: relative;
+    }
+    .content-admin {
+        margin-left: 0;
+        padding: 20px;
+        width: 100%;
+    }
 }
 
 header {

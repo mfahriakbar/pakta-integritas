@@ -11,8 +11,7 @@
 
     <!-- Background -->
     <figure class="mybg">
-        <img src="{{ asset('assets/kantor.jpg') }}" alt="" style="width: 100%; height: auto;">
-        <div class="overlay"></div> <!-- Overlay div -->
+        <img src="assets/kantor.jpg" alt="">
     </figure>
 
     <div class="isi-form" id="isi-form">

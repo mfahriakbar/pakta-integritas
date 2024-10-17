@@ -10,7 +10,16 @@
     </div>
     <ul id="menu-list" class="hidden">
         <li><a href="/" class="{{ request()->is('/') ? 'active' : '' }}">Beranda</a></li>
-        <li><a href="/studi-kelayakan" class="{{ request()->is('studi kelayakan') ? 'active' : '' }}">Studi Kelayakan</a></li>
+        <li class="dropdown">
+            <div class="dropdown-i">
+                <a href="https://sites.google.com/view/smapbpmsph/pedoman-dan-prosedur-mi">Studi Kelayakan</a>
+                <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <ul class="dropdown-content">
+            <li><a href="/studi-kelayakan" class="{{ request()->is('studi kelayakan') ? 'active' : '' }}">Pengguna Jasa</a></li>
+            <li><a href="/penyedia-jasa" class="{{ request()->is('penyedia-jasa') ? 'active' : '' }}">Penyedia Jasa</a></li>
+            </ul>
+        </li>
         <li><a href="/lapor" class="{{ request()->is('lapor') ? 'active' : '' }}">Lapor</a></li>
         <li class="dropdown">
             <div class="dropdown-i">

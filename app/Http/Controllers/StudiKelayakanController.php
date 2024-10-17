@@ -76,7 +76,7 @@ class StudiKelayakanController extends Controller
             'harga_sesuai' => 'required|in:Ya,Tidak',
             'no_identitas' => 'required|in:Ya,Tidak',
             'nama_pemilik' => 'required|in:Ya,Tidak',
-            'kesimpulan' => 'required|in:Ya,Tidak',
+            'kesimpulan' => 'required|string|max:255', // Update validation to accept string values
             'tim_kepatuhan' => 'required|string|max:255',
             'tempat' => 'required|string|max:255',
             'tanggal' => 'required|date',
@@ -106,7 +106,7 @@ class StudiKelayakanController extends Controller
             'harga_sesuai' => $validatedData['harga_sesuai'],
             'no_identitas' => $validatedData['no_identitas'],
             'nama_pemilik' => $validatedData['nama_pemilik'],
-            'kesimpulan' => $validatedData['kesimpulan'],
+            'kesimpulan' => $validatedData['kesimpulan'], // Store the new value
             'tim_kepatuhan' => $timKepatuhan,
             'tempat' => $validatedData['tempat'],
             'tanggal' => $validatedData['tanggal'],
@@ -134,19 +134,6 @@ class StudiKelayakanController extends Controller
         }
     }
 
-
-    public function destroy($id)
-    {
-        // Mencari data berdasarkan ID
-        $data = StudiKelayakan::findOrFail($id);
-
-        // Menghapus data
-        $data->delete();
-
-        // Redirect kembali ke halaman yang sesuai dengan pesan sukses
-        return redirect()->route('studi-kelayakan.index')->with('success', 'Data Berhasil Dihapus');
-    }
-
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -166,7 +153,7 @@ class StudiKelayakanController extends Controller
             'harga_sesuai' => 'required|in:Ya,Tidak',
             'no_identitas' => 'required|in:Ya,Tidak',
             'nama_pemilik' => 'required|in:Ya,Tidak',
-            'kesimpulan' => 'required|in:Ya,Tidak',
+            'kesimpulan' => 'required|string|max:255',
             'tim_kepatuhan' => 'required|string|max:255',
             'tempat' => 'required|string|max:255',
             'tanggal' => 'required|date',
@@ -176,15 +163,15 @@ class StudiKelayakanController extends Controller
 
         $studiKelayakan = StudiKelayakan::findOrFail($id);
         $studiKelayakan->fill($request->except('dokumen'));
-    
+        
         // Handle file update
         if ($request->hasFile('dokumen')) {
             $filePath = $request->file('dokumen')->store('dokumen_files', 'public');
             $studiKelayakan->dokumen = $filePath;
         }
-    
+        
         $studiKelayakan->save();
-    
+        
         return redirect()->route('studi-kelayakan.index')->with('success', 'Data berhasil diupdate');
     }
 

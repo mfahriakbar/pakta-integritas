@@ -14,6 +14,7 @@
     <br>
     <hr>
     <h5>Menu</h5>
+    <!-- Pakta Integritas Dropdown -->
     <div class="dropdown-admin">
         <div class="select-admin">
             <i class="fas fa-file-alt"></i>
@@ -36,12 +37,22 @@
         </ul>
     </div>
 
-    <a href="/admin/penggunaJasa">
-        <div class="box-admin-akun">
+    <!-- Uji Kelayakan Dropdown -->
+    <div class="dropdown-uji-kelayakan">
+        <div class="select-uji-kelayakan">
             <i class="fas fa-file-alt"></i>
-            <h4>Uji Kelayakan</h4>
+            <h4 class="selected-uji-kelayakan">Uji Kelayakan</h4>
+            <i class="fa-solid fa-caret-down"></i>
         </div>
-    </a>
+        <ul class="menu-uji-kelayakan">
+            <a href="/admin/penggunaJasa">
+                <li>Pengguna Jasa</li>
+            </a>
+            <a href="/admin/penyediaJasa">
+                <li>Penyedia Jasa</li>
+            </a>
+        </ul>
+    </div>
 
     <a href="/admin/lapor">
         <div class="box-admin-akun">

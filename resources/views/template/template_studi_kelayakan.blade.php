@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Studi Kelayakan</title>
+    <title>UJI KELAYAKAN PENGGUNA JASA</title>
     <style>
         * {
             margin: 0;
@@ -26,173 +26,167 @@
             max-width: 100%;
             height: auto;
         }
-
-        h1 {
-            font-size: 16pt;
+        h3 {
             text-align: center;
-            margin: 20px 0;
-            text-transform: uppercase;
+            margin-bottom: 20px;
+            color: #595959
         }
-
-        .content {
-            margin: 0 2cm;
-        }
-
         .section {
             margin-bottom: 20px;
+            margin-left: 2cm
         }
-
         .section-title {
             font-weight: bold;
             margin-bottom: 10px;
         }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        .field {
+            margin-bottom: 5px;
         }
-
-        table, th, td {
-            border: 1px solid black;
+        .label {
+            font-weight: bold;
         }
-
-        th, td {
-            padding: 5px;
-            text-align: left;
+        .value {
+            margin-left: 10px;
         }
-
         .signature {
-            margin: 20px 70px 0 0;
+            margin-top: 30px;
+            margin-left: 2cm
+        }
+        .document-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            margin-left: 2cm;
+        }
+        .document-title {
+            flex: 0 0 60%;
+        }
+        .document-image {
+            flex: 0 0 40%;
             text-align: right;
-            font-size: 12pt;
         }
-
-        .signature-barcode{
-            padding: 5px;
-        }
-
-        .page-break {
-            page-break-before: always;
+        .document-image img {
+            max-width: 100%;
+            height: auto;
+            max-height: 200px;
+            object-fit: contain;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <img src="{{ $base64 }}" alt="Header">
+        <img src="{{ $base64 }}" alt="Kop Surat">
     </div>
 
-    <h1>Laporan Studi Kelayakan</h1>
+    <h3>UJI KELAYAKAN PENGGUNA JASA</h3>
 
-    <div class="content">
-        <div class="section">
-            <div class="section-title">Informasi Umum</div>
-            <table>
-                <tr>
-                    <td>Nama Perusahaan/Instansi/ Perorangan
-                        Pengguna Jasa</td>
-                    <td>: {{ $data->nama_pengguna }}</td>
-                </tr>
-                <tr>
-                    <td>Alamat</td>
-                    <td>: {{ $data->alamat }}</td>
-                </tr>
-                <tr>
-                    <td>Hubungan</td>
-                    <td>: {{ $data->hubungan }}</td>
-                </tr>
-                <tr>
-                    <td>Nama Penghubung</td>
-                    <td>: {{ $data->nama_penghubung }}</td>
-                </tr>
-                <tr>
-                    <td>No. Telepon</td>
-                    <td>: {{ $data->no_telepon }}</td>
-                </tr>
-            </table>
+    <div class="section">
+        <div class="section-title" style="color: #595959">IDENTITAS PENGGUNA JASA</div>
+        <div class="field">
+            <span class="label">Nama Perusahaan/Instansi/Perorangan Pengguna Jasa:</span>
+            <span class="value">{{ $data->nama_pengguna }}</span>
         </div>
-
-        <div class="section">
-            <div class="section-title">Hasil Pemeriksaan</div>
-            <table>
-                <tr>
-                    <td>Nama Perusahaan</td>
-                    <td>: {{ $data->nama_perusahaan }}</td>
-                </tr>
-                <tr>
-                    <td>Nama Perorangan</td>
-                    <td>: {{ $data->nama_perorangan }}</td>
-                </tr>
-                <tr>
-                    <td>Alamat</td>
-                    <td>: {{ $data->alamat_ada }}</td>
-                </tr>
-                <tr>
-                    <td>Nomor Telepon/WA</td>
-                    <td>: {{ $data->no_telp_ada }}</td>
-                </tr>
-                <tr>
-                    <td>Email</td>
-                    <td>: {{ $data->email_ada }}</td>
-                </tr>
-                <tr>
-                    <td>Pembayaran Langsung (e-billing)</td>
-                    <td>: {{ $data->pembayaran_langsung }}</td>
-                </tr>
-                <tr>
-                    <td>Pembayaran Sebelum Selesai Pengujian (e-billing)</td>
-                    <td>: {{ $data->pembayaran_sebelum }}</td>
-                </tr>
-                <tr>
-                    <td>Harga Pelayanan Pengujian Sesuai</td>
-                    <td>: {{ $data->harga_sesuai }}</td>
-                </tr>
-                <tr>
-                    <td>No. Identitas Nama Penghubung</td>
-                    <td>: {{ $data->no_identitas }}</td>
-                </tr>
-                <tr>
-                    <td>Nama Pemilik Sesuai</td>
-                    <td>: {{ $data->nama_pemilik }}</td>
-                </tr>
-            </table>
+        <div class="field">
+            <span class="label">Alamat:</span>
+            <span class="value">{{ $data->alamat }}</span>
         </div>
-
-        <div class="section">
-            <div class="section-title">Kesimpulan</div>
-            <p>{{ $data->kesimpulan == 'Ya' ? 'Layak' : 'Tidak Layak' }}</p>
+        <div class="field">
+            <span class="label">Hubungan dengan BPMSPH:</span>
+            <span class="value">{{ $data->hubungan }}</span>
         </div>
-
-        <div class="section">
-            <div class="section-title">Tim Kepatuhan</div>
-            <p>{{ $data->tim_kepatuhan }}</p>
+        <div class="field">
+            <span class="label">Nama Pegawai Penghubung Pengguna Jasa:</span>
+            <span class="value">{{ $data->nama_penghubung }}</span>
         </div>
+        <div class="field">
+            <span class="label">Nomor Telpon/WA:</span>
+            <span class="value">{{ $data->no_telepon }}</span>
+        </div>
+    </div>
 
-        <div class="section">
-            <div class="section-title">File Upload dokumen KTP/ KTM/Kartu
-                Nama/Surat Pemohonan dari Institusi/
-                Universitas/Sekolah, dll</div>
+    <div class="section">
+        <div class="section-title" style="color: #595959">1. DATA PENGGUNA JASA</div>
+        <div class="field">
+            <span class="label">a. Nama Perusahaan:</span>
+            <span class="value">{{ $data->nama_perusahaan ? 'Ya' : 'Tidak' }}</span>
+        </div>
+        <div class="field">
+            <span class="label">b. Nama Perorangan:</span>
+            <span class="value">{{ $data->nama_perorangan ? 'Ya' : 'Tidak' }}</span>
+        </div>
+        <div class="field">
+            <span class="label">c. Alamat:</span>
+            <span class="value">{{ $data->alamat_ada ? 'Ya' : 'Tidak' }}</span>
+        </div>
+        <div class="field">
+            <span class="label">d. Nomor Telepon/WA:</span>
+            <span class="value">{{ $data->no_telp_ada ? 'Ya' : 'Tidak' }}</span>
+        </div>
+        <div class="field">
+            <span class="label">e. Nomor Email:</span>
+            <span class="value">{{ $data->email_ada ? 'Ya' : 'Tidak' }}</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title" style="color: #595959">2. KESANGGUPAN PEMBAYARAN PELAYANAN PENGUJIAN</div>
+        <div class="field">
+            <span class="label">a. Pembayaran Langsung (e-billing):</span>
+            <span class="value">{{ $data->pembayaran_langsung ? 'Ya' : 'Tidak' }}</span>
+        </div>
+        <div class="field">
+            <span class="label">b. Pembayaran Sebelum Selesai Pengujian (e-billing):</span>
+            <span class="value">{{ $data->pembayaran_sebelum ? 'Ya' : 'Tidak' }}</span>
+        </div>
+        <div class="field">
+            <span class="label">c. Harga Pelayanan Pengujian Sesuai:</span>
+            <span class="value">{{ $data->harga_sesuai ? 'Ya' : 'Tidak' }}</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title" style="color: #595959">3. DATA</div>
+        <div class="field">
+            <span class="label">a. Nomor Identitas Nama Penghubung:</span>
+            <span class="value">{{ $data->no_identitas ? 'Ya' : 'Tidak' }}</span>
+        </div>
+        <div class="field">
+            <span class="label">b. Nama Pemilik Perusahaan/ Pengguna Jasa:</span>
+            <span class="value">{{ $data->nama_pemilik ? 'Ya' : 'Tidak' }}</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">KESIMPULAN UJI KELAYAKAN</div>
+        <div class="field">{{ $data->kesimpulan }}</div>
+    </div>
+
+    <div class="document-section">
+        <div class="document-title">
+            <div class="section-title">File Upload dokumen KTP/ KTM/Kartu <br>
+                Nama/Surat Pemohonan dari Institusi/ <br>
+                Universitas/Sekolah, dll
+            </div>
+        </div>
+        <div class="document-image">
             @if($data->dokumen)
-                <img src="{{ $dokumentBase64 }}" alt="Dokumen/Gambar" style="max-width:40%; height:auto;">
+                <img src="{{ $dokumentBase64 }}" alt="Dokumen/Gambar">
             @else
                 <p>Tidak ada gambar atau dokumen yang diunggah.</p>
             @endif
-        </div>        
-
-        <div class="signature">
-        @php
-            \Carbon\Carbon::setLocale('id'); // Mengatur locale Carbon ke bahasa Indonesia
-        @endphp
-
-        <p>{{ $data->tempat }}, {{ \Carbon\Carbon::parse($data->tanggal)->translatedFormat('d F Y') }}</p>
-
-        {{-- !-- Menampilkan QR Code dalam format SVG --> --}}
-        <div class="signature-barcode">
+        </div>
+    </div>
+    
+    <div class="signature">
+        <div>Mengetahui Tim Kepatuhan</div>
+        <div>{{ $data->tim_kepatuhan }}</div>
+        <div>Dibuat di {{ $data->tempat }}</div>
+        <div>Tanggal {{ \Carbon\Carbon::parse($data->tanggal)->translatedFormat('d F Y') }}</div>
+        <div>
             <img src="data:image/svg+xml;base64,{{ $qrcodeBase64 }}" alt="QR Code" width="80">
         </div>
-
-        <p class="signature-name">{{ $data->nama_pengguna }}</p>
-    </div>
-
+        <div>Nama Pelaksana Kegiatan BPMSPH {{ $data->nama_pengguna }}</div>
     </div>
 </body>
 </html>

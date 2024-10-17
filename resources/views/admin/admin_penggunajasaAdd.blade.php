@@ -163,8 +163,8 @@
                 <label for="kesimpulan">Layak menjadi Pengguna Jasa <span>*</span></label>
                 <select id="kesimpulan" name="kesimpulan" required>
                     <option value="">Pilih...</option>
-                    <option value="Ya" {{ old('kesimpulan') == 'Ya' ? 'selected' : '' }}>Ya</option>
-                    <option value="Tidak" {{ old('kesimpulan') == 'Tidak' ? 'selected' : '' }}>Tidak</option>
+                    <option value="Layak" {{ old('kesimpulan') == 'Layak' ? 'selected' : '' }}>Layak</option>
+                    <option value="Tidak Layak" {{ old('kesimpulan') == 'Tidak Layak' ? 'selected' : '' }}>Tidak Layak</option>
                 </select>
             </div>
 
@@ -206,7 +206,6 @@
     </div>
 
     <style>
-        input,
         select,
         textarea {
             width: 100%;
@@ -232,11 +231,16 @@
         }
     </style>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('form-container');
         const submitBtn = document.querySelector('#submit-btn');
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('dokumen');
+        const filePreview = document.getElementById('filePreview');
 
+        // Handle form submission with SweetAlert2
         form.addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent form auto-submit
 
@@ -246,7 +250,7 @@
                 return;
             }
 
-            // Display confirmation with SweetAlert2
+            // Display confirmation dialog
             Swal.fire({
                 title: "Apakah Anda yakin?",
                 text: "Pastikan data dan email yang Anda masukkan sudah benar!",
@@ -257,64 +261,44 @@
                 confirmButtonText: "Ya, kirim!"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Disable submit button to prevent multiple clicks
                     submitBtn.disabled = true;
-                    submitBtn.textContent = "Mengirim..."; // Optional: change button text
+                    submitBtn.textContent = "Mengirim...";
 
-                    // Send form data using fetch API
                     let formData = new FormData(form);
 
                     fetch('{{ route('studi-kelayakan.store') }}', {
-                            method: 'POST',
-                            body: formData
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            Swal.fire({
-                                title: "Terkirim!",
-                                text: data.message,
-                                icon: "success",
-                                footer: '<a href="https://mail.google.com/">Pergi ke Email?</a>',
-                                showConfirmButton: true,
-                                timer: 10000
-                            }).then(() => {
-                                // Re-enable button and reset text after confirmation
-                                submitBtn.disabled = false;
-                                submitBtn.textContent = "Kirim";
-                            });
-                            form.reset(); // Reset form after successful submission
-                            clearFilePreview(); // Clear file preview after submission
-                        })
-                        .catch(error => {
-                            Swal.fire({
-                                title: 'Error!',
-                                text: 'Terjadi kesalahan saat mengirim laporan.',
-                                icon: 'error',
-                                confirmButtonText: 'Ok'
-                            });
-                            submitBtn.disabled = false; // Re-enable button on error
-                            submitBtn.textContent = "Kirim"; // Restore button text
-                        });
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.text()) // Coba lihat respons mentah
+                .then(data => {
+                    console.log(data); // Lihat respons di konsol
+                    // Kemudian coba konversi ke JSON jika sesuai
+                    let jsonResponse = JSON.parse(data);
+                    Swal.fire({
+                        title: "Terkirim!",
+                        text: jsonResponse.message,
+                        icon: "success",
+                        footer: '<a href="https://mail.google.com/">Pergi ke Email?</a>',
+                        showConfirmButton: true,
+                        timer: 10000
+                    });
+                })
+                .catch(error => {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Terjadi kesalahan saat mengirim laporan.',
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Kirim";
+                });
                 }
             });
         });
 
-        // Fungsi clear file preview setelah submit
-        function clearFilePreview() {
-            const filePreview = document.getElementById('filePreview');
-            filePreview.innerHTML = '';
-            const fileInput = document.getElementById('dokumen');
-            fileInput.value = ''; // Reset input file
-            document.getElementById('uploadArea').querySelector('span').style.display =
-                'inline'; // Tampilkan pesan upload lagi
-        }
-    });
-
         // Handle file upload preview
-        const uploadArea = document.getElementById('uploadArea');
-        const fileInput = document.getElementById('dokumen');
-        const filePreview = document.getElementById('filePreview');
-
         uploadArea.addEventListener('click', () => {
             fileInput.click();
         });
@@ -340,14 +324,12 @@
             }
         });
 
-        // Handle file preview
         function handleFiles() {
             const files = fileInput.files;
             filePreview.innerHTML = '';
 
             for (const file of files) {
                 const reader = new FileReader();
-
                 reader.onload = function(e) {
                     const fileType = file.type.split('/')[0];
                     if (fileType === 'image') {
@@ -360,16 +342,16 @@
                         filePreview.appendChild(para);
                     }
                 };
-
                 reader.readAsDataURL(file);
             }
         }
 
-        // Clear file preview
+        // Clear file preview after submission
         function clearFilePreview() {
             filePreview.innerHTML = '';
             fileInput.value = ''; // Reset the file input
-            uploadArea.querySelector('span').style.display = 'inline'; // Show the upload message again
+            document.getElementById('uploadArea').querySelector('span').style.display = 'inline';
         }
+    });
     </script>
 @endsection

@@ -1,18 +1,19 @@
 @extends('layouts.admin')
 
-@section('title', 'Tabel Lapor Spg')
+@section('title', 'Tabel Penyedia Jasa')
 
 @section('content')
 
 <header>
-    <h1>Tabel Formulir Lapor Spg</h1>
+    <h1>Tabel Formulir Uji Kelayakan Penyedia Jasa</h1>
 </header>
 <hr class="header-line">
+
 <!-- Panggil komponen search section -->
 <x-search_section />
 
-<!-- Panggil komponen lapor table -->
-<x-lapor_table :data="$data"/>
+<!-- Panggil komponen data table -->
+<x-penyedia_jasa :data="$data" />
 
 <!-- Panggil komponen pagination -->
 <x-pagination :paginator="$data" />

@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaktaIntegritasController;
 use App\Http\Controllers\LaporSpgController;
 use App\Http\Controllers\StudiKelayakanController;
+use App\Http\Controllers\PenyediaJasaController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Middleware\AdminMiddleware;
-use App\Http\Controllers\LaporController;
 
 // Public Routes
 Route::get('/', function () {
@@ -17,11 +17,19 @@ Route::get('/studi-kelayakan', function () {
     return view('studi-kelayakan');
 });
 
+Route::get('/penyedia-jasa', function () {
+    return view('penyedia-jasa');
+});
+
 Route::get('/lapor', function () {
     return view('lapor');
 });
 
 Route::get('/spg', [LaporSpgController::class, 'publicIndex']);
+
+Route::get('/lapor-k3', function () {
+    return view('lapor-k3');
+});
 
 Route::get('/web', function () {
     return view('web');
@@ -65,17 +73,6 @@ Route::middleware(AdminMiddleware::class)->prefix('admin')->group(function () {
 
     Route::get('/home', [PaktaIntegritasController::class, 'index'])->name('admin.home');
 
-    // StudiKelayakan
-    Route::get('/studi-kelayakan', [StudiKelayakanController::class, 'index'])->name('studi-kelayakan.index');
-    Route::get('/studi-kelayakan/add', [StudiKelayakanController::class, 'create'])->name('studi-kelayakan.add');
-    Route::post('/studi-kelayakan/store', [StudiKelayakanController::class, 'store'])->name('studi-kelayakan.store.admin');
-    Route::get('/studi-kelayakan/edit/{id}', [StudiKelayakanController::class, 'edit'])->name('studi-kelayakan.edit');
-    Route::put('/studi-kelayakan/{id}', [StudiKelayakanController::class, 'update'])->name('studi-kelayakan.update');
-    Route::delete('/studi-kelayakan/{id}', [StudiKelayakanController::class, 'destroy'])->name('studi-kelayakan.destroy');
-    Route::get('/studi-kelayakan/export', [StudiKelayakanController::class, 'export'])->name('studi-kelayakan.export');
-    Route::get('/studi-kelayakan/download-pdf/{id}', [StudiKelayakanController::class, 'downloadPdf'])->name('studi-kelayakan.download-pdf');
-    Route::get('/studi-kelayakan/view/{id}', [StudiKelayakanController::class, 'viewLaporan'])->name('studi-kelayakan.view');
-
     // SPG Routes
     Route::get('/lapor/add', [LaporSpgController::class, 'create'])->name('lapor.add');
     Route::post('/lapor/store', [LaporSpgController::class, 'store'])->name('lapor.submit');
@@ -86,6 +83,28 @@ Route::middleware(AdminMiddleware::class)->prefix('admin')->group(function () {
     Route::put('/lapor/{id}', [LaporSpgController::class, 'update'])->name('lapor-spg.update');
     Route::delete('/lapor/{id}', [LaporSpgController::class, 'destroy'])->name('lapor-spg.destroy');
 
+    // StudiKelayakan PenggunaJasa
+    Route::get('/penggunaJasa', [StudiKelayakanController::class, 'index'])->name('studi-kelayakan.index');
+    Route::get('/studi-kelayakan/add', [StudiKelayakanController::class, 'create'])->name('studi-kelayakan.add');
+    Route::post('/studi-kelayakan/store', [StudiKelayakanController::class, 'store'])->name('studi-kelayakan.store.admin');
+    Route::get('/studi-kelayakan/edit/{id}', [StudiKelayakanController::class, 'edit'])->name('studi-kelayakan.edit');
+    Route::put('/studi-kelayakan/{id}', [StudiKelayakanController::class, 'update'])->name('studi-kelayakan.update');
+    Route::delete('/studi-kelayakan/{id}', [StudiKelayakanController::class, 'destroy'])->name('studi-kelayakan.destroy');
+    Route::get('/studi-kelayakan/export', [StudiKelayakanController::class, 'export'])->name('studi-kelayakan.export');
+    Route::get('/studi-kelayakan/download-pdf/{id}', [StudiKelayakanController::class, 'downloadPdf'])->name('studi-kelayakan.download-pdf');
+    Route::get('/studi-kelayakan/view/{id}', [StudiKelayakanController::class, 'viewLaporan'])->name('studi-kelayakan.view');
+
+    //Uji Kelayakan PenyediaJasa
+    Route::get('/penyediaJasa', [PenyediaJasaController::class, 'index'])->name('penyedia-jasa.index');
+    Route::get('/penyedia-jasa/create', [PenyediaJasaController::class, 'create'])->name('penyedia-jasa.add');
+    Route::post('/penyedia-jasa/store', [PenyediaJasaController::class, 'store'])->name('penyedia-jasa.store');
+    Route::get('/penyedia-jasa/edit/{id}', [PenyediaJasaController::class, 'edit'])->name('penyedia-jasa.edit');
+    Route::put('/penyedia-jasa/{id}', [PenyediaJasaController::class, 'update'])->name('penyedia-jasa.update');
+    Route::delete('/penyedia-jasa/{id}', [PenyediaJasaController::class, 'destroy'])->name('penyedia-jasa.destroy');
+    Route::get('/penyedia-jasa/export/{status?}', [PenyediaJasaController::class, 'export'])->name('penyedia-jasa.export');
+    Route::get('/penyedia-jasa/download-pdf/{id}', [PenyediaJasaController::class, 'downloadPdf'])->name('penyedia-jasa.downloadPdf');
+    Route::get('/penyedia-jasa/view-laporan/{id}', [PenyediaJasaController::class, 'viewLaporan'])->name('penyedia-jasa.viewLaporan');
+
     Route::get('/{role?}', [PaktaIntegritasController::class, 'index'])->name('admin.role');
     Route::post('/add/{role}', [PaktaIntegritasController::class, 'store'])->name('integritas.store.admin');
     Route::get('/add/{role}', [PaktaIntegritasController::class, 'showForm'])->name('admin.add');
@@ -95,4 +114,5 @@ Route::middleware(AdminMiddleware::class)->prefix('admin')->group(function () {
     Route::get('/{role}/export', [PaktaIntegritasController::class, 'export'])->name('integritas.export');
     Route::get('/{role}/download-pdf/{id}', [PaktaIntegritasController::class, 'downloadPdf'])->name('integritas.download-pdf');
     Route::get('/{role}/view-surat/{id}', [PaktaIntegritasController::class, 'viewSurat'])->name('integritas.view-surat');
+
 });

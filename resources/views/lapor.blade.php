@@ -101,7 +101,7 @@
                     </div>
                     <h5>Lapor SPG! <br>Lapor Penolakan Suap Pungli</h5>
                 </a>
-                <a href="https://docs.google.com/document/d/1btODQp8yFu-Z_XMPkGhrpju69Ja-jA4V/edit?usp=sharing&ouid=115175528271640506706&rtpof=true&sd=true"
+                <a href="/lapor-k3"
                     class="layanan-content-isi">
                     <div class="layanan-content-title">
                         <figure class="layanan-img">

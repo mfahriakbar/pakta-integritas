@@ -187,7 +187,6 @@
                             <select name="form-role" id="form-role" onchange="showForm()">
                                 <option value="null">---Silahkan Pilih---</option>
                                 <option value="pengguna">Pengguna Jasa</option>
-                                <option value="penyedia">Penyedia Jasa</option>
                             </select>
                         </div>
                     </div>
@@ -348,10 +347,11 @@
                         <label for="kesimpulan">Layak menjadi Pengguna Jasa <span>*</span></label>
                         <select id="kesimpulan" name="kesimpulan" required>
                             <option value="">Pilih...</option>
-                            <option value="Ya">Ya</option>
-                            <option value="Tidak">Tidak</option>
+                            <option value="Layak">Layak Menjadi Pengguna Jasa</option>
+                            <option value="Tidak Layak">Tidak Layak Menjadi Pengguna Jasa</option>
+                            <option value="Perlu Evaluasi">Perlu Evaluasi</option> <!-- New option -->
                         </select>
-                    </div>
+                    </div>                    
 
                     <div class="form-group">
                         <label for="tim_kepatuhan">Mengetahui Tim Kepatuhan <span>*</span></label>
