@@ -57,7 +57,14 @@
     <a href="/admin/lapor">
         <div class="box-admin-akun">
             <i class="fas fa-file-alt"></i>
-            <h4>Formulir SPG</h4>
+            <h4>Lapor SPG</h4>
+        </div>
+    </a>
+
+    <a href="/admin/k3">
+        <div class="box-admin-akun">
+            <i class="fas fa-file-alt"></i>
+            <h4>Lapor K3</h4>
         </div>
     </a>
 

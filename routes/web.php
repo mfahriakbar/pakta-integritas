@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaktaIntegritasController;
 use App\Http\Controllers\LaporSpgController;
-use App\Http\Controllers\StudiKelayakanController;
 use App\Http\Controllers\PenyediaJasaController;
+use App\Http\Controllers\StudiKelayakanController;
+use App\Http\Controllers\K3Controller;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Middleware\AdminMiddleware;
 
@@ -54,6 +55,9 @@ Route::prefix('user')->group(function () {
 
     // Rute untuk menyimpan Studi Kelayakan Pengguna (dapat diakses oleh user biasa)
     Route::post('/studi-kelayakan/store', [StudiKelayakanController::class, 'store'])->name('studi-kelayakan.store');
+
+    // Rute untuk menyimpan laporan K3 (dapat diakses oleh user biasa)
+    Route::post('/lapork3/store', [K3Controller::class, 'store'])->name('lapork3.submit.user');
 });
 
 
@@ -82,6 +86,16 @@ Route::middleware(AdminMiddleware::class)->prefix('admin')->group(function () {
     Route::get('/lapor/edit/{id}', [LaporSpgController::class, 'edit'])->name('lapor-spg.edit');
     Route::put('/lapor/{id}', [LaporSpgController::class, 'update'])->name('lapor-spg.update');
     Route::delete('/lapor/{id}', [LaporSpgController::class, 'destroy'])->name('lapor-spg.destroy');
+
+    // K3 Routes
+    Route::get('/lapork3/add', [K3Controller::class, 'create'])->name('lapork3.add');
+    Route::post('/lapork3/store', [K3Controller::class, 'store'])->name('lapork3.submit');
+    Route::get('/k3', [K3Controller::class, 'Index'])->name('lapork3.index');
+    Route::get('/lapork3/export/excel', [K3Controller::class, 'exportExcel'])->name('lapor-k3.export');
+    Route::get('/lapork3/export/pdf/{id}', [K3Controller::class, 'downloadPdf'])->name('laporank3.pdf');
+    Route::get('/lapork3/edit/{id}', [K3Controller::class, 'edit'])->name('lapor-k3.edit');
+    Route::put('/lapork3/{id}', [K3Controller::class, 'update'])->name('lapor-k3.update');
+    Route::delete('/lapork3/{id}', [K3Controller::class, 'destroy'])->name('lapor-k3.destroy');
 
     // StudiKelayakan PenggunaJasa
     Route::get('/penggunaJasa', [StudiKelayakanController::class, 'index'])->name('studi-kelayakan.index');

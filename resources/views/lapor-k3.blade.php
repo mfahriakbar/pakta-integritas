@@ -15,14 +15,15 @@
 
     <div class="isi-form" id="isi-form">
         <div class="ContainerSpg">
-            <form id="reportForm" action="{{ route('lapor-k3.store') }}" method="POST" enctype="multipart/form-data"
+            <form id="reportForm" action="{{ route('lapork3.submit.user') }}" method="POST" enctype="multipart/form-data"
                 class="form-container" style="display: block; width:100%; margin-top: 10%;">
                 @csrf
 
                 <h3>LAPORAN INSIDEN DAN KECELAKAAN</h3>
                 <div class="img-form"><img src="assets/pembatas.png" alt=""></div>
                 <h3>BALAI PENGUJIAN MUTU DAN SERTIFIKASI PRODUK HEWAN</h3>
-
+                
+                <input type="hidden" name="is_admin" value="false">
                 <div class="form-group">
                     <label for="incidentDateTime">Waktu dan Lokasi: <span>*</span></label>
                     <input type="date" id="incidentDate" name="incidentDate" required>
@@ -93,6 +94,15 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="evidence" class="upload-label">Foto-foto penunjang (bila ada):</label>
+                    <div class="upload-area" id="uploadArea">
+                        <input type="file" id="evidence" name="evidence" accept="image/*,application/pdf" hidden>
+                        <span>Seret dan lepas file di sini atau <strong>klik untuk memilih file</strong></span>
+                        <div id="filePreview" class="file-preview"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="causeAnalysis">Analisa Penyebab: <span>*</span></label>
                     <textarea id="causeAnalysis" name="causeAnalysis" rows="4" required></textarea>
                 </div>
@@ -138,13 +148,32 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="reporterSignature">Tanda Tangan Pelapor: <span>*</span></label>
-                    <input type="file" id="reporterSignature" name="reporterSignature" accept="image/*" required>
+                    <label for="no_whatsapp">Nomor Handphone/WhatsApp Pelapor <span>*</span>
+                        <small>Contoh: 81234567899</small>
+                    </label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">+62</div>
+                        <input type="tel" id="reporterSignature" name="reporterSignature" class="form-control"
+                            placeholder="81234567899" pattern="^\d{8,13}$" required>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="supervisorSignature">Tanda Tangan Atasan: <span>*</span></label>
-                    <input type="file" id="supervisorSignature" name="supervisorSignature" accept="image/*" required>
+                    <label for="reporterEmail">Email Pelapor <span>*</span>
+                        <small style="color:red;">Pastikan email yang dimasukkan benar.</small>
+                    </label>
+                    <input type="email" id="reporterEmail" name="reporterEmail" placeholder="example@gmail.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="no_whatsapp">Nomor Handphone/WhatsApp Atasan <span>*</span>
+                        <small>Contoh: 81234567899</small>
+                    </label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">+62</div>
+                        <input type="tel" id="supervisorSignature" name="supervisorSignature" class="form-control"
+                            placeholder="81234567899" pattern="^\d{8,13}$" required>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -158,4 +187,146 @@
             </form>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('reportForm');
+        const submitBtn = document.querySelector('#submit-btn');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form auto-submit
+
+            // Validate form before submitting
+            if (!form.checkValidity()) {
+                form.reportValidity(); // Show validation messages if form is invalid
+                return;
+            }
+
+            // Display confirmation with SweetAlert2
+            Swal.fire({
+                title: "Apakah Anda yakin?",
+                text: "Pastikan data dan email yang Anda masukkan sudah benar!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#28a745",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya, kirim!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Disable submit button to prevent multiple clicks
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = "Mengirim..."; // Optional: change button text
+
+                    // Send form data using fetch API
+                    let formData = new FormData(form);
+
+                    fetch('{{ route('lapork3.submit.user') }}', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            Swal.fire({
+                                title: "Terkirim!",
+                                text: data.message,
+                                icon: "success",
+                                footer: '<a href="https://mail.google.com/">Pergi ke Email?</a>',
+                                showConfirmButton: true,
+                                timer: 10000
+                            }).then(() => {
+                                // Re-enable button and reset text after confirmation
+                                submitBtn.disabled = false;
+                                submitBtn.textContent = "Kirim";
+                            });
+                            form.reset(); // Reset form after successful submission
+                            clearFilePreview(); // Clear file preview after submission
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Terjadi kesalahan saat mengirim laporan.',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                            submitBtn.disabled = false; // Re-enable button on error
+                            submitBtn.textContent = "Kirim"; // Restore button text
+                        });
+                }
+            });
+        });
+
+        // Clear file preview after submit
+        function clearFilePreview() {
+            const filePreview = document.getElementById('filePreview');
+            filePreview.innerHTML = '';
+            const fileInput = document.getElementById('evidence');
+            fileInput.value = ''; // Reset input file
+            document.getElementById('uploadArea').querySelector('span').style.display = 'inline'; // Show upload message again
+        }
+    });
+
+    // File upload drag and drop functionality
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('evidence');
+    const filePreview = document.getElementById('filePreview');
+
+    uploadArea.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    fileInput.addEventListener('change', handleFiles);
+
+    uploadArea.addEventListener('dragover', (event) => {
+        event.preventDefault();
+        uploadArea.style.backgroundColor = '#e0e0e0';
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.style.backgroundColor = '';
+    });
+
+    uploadArea.addEventListener('drop', (event) => {
+        event.preventDefault();
+        uploadArea.style.backgroundColor = '';
+        const files = event.dataTransfer.files;
+        if (files.length > 0) {
+            fileInput.files = files;
+            handleFiles();
+        }
+    });
+
+    // Handle file preview
+    function handleFiles() {
+        const files = fileInput.files;
+        filePreview.innerHTML = '';
+
+        for (const file of files) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const fileType = file.type.split('/')[0];
+                if (fileType === 'image') {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    filePreview.appendChild(img);
+                } else {
+                    const para = document.createElement('p');
+                    para.textContent = `File: ${file.name} (PDF)`;
+                    filePreview.appendChild(para);
+                }
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // Clear file preview
+    function clearFilePreview() {
+        filePreview.innerHTML = '';
+        fileInput.value = ''; // Reset the file input
+        uploadArea.querySelector('span').style.display = 'inline'; // Show the upload message again
+    }
+    </script>
+
 @endsection

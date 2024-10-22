@@ -12,7 +12,7 @@
 <x-search_section />
 
 <!-- Panggil komponen lapor table -->
-<x-lapor_table :data="$data"/>
+<x-k3_table :data="$data"/>
 
 <!-- Panggil komponen pagination -->
 <x-pagination :paginator="$data" />
