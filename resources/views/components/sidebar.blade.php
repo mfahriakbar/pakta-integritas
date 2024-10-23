@@ -68,6 +68,13 @@
         </div>
     </a>
 
+    <a href="/admin/fkp">
+        <div class="box-admin-akun">
+            <i class="fas fa-file-alt"></i>
+            <h4>Laporan Fkp</h4>
+        </div>
+    </a>
+
     <a href="{{ route('admin.account') }}">
         <div class="box-admin-akun">
             <i class="fa-solid fa-gear"></i>

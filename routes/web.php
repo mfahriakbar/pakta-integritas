@@ -6,6 +6,8 @@ use App\Http\Controllers\LaporSpgController;
 use App\Http\Controllers\PenyediaJasaController;
 use App\Http\Controllers\StudiKelayakanController;
 use App\Http\Controllers\K3Controller;
+use App\Http\Controllers\FkpController;
+use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Middleware\AdminMiddleware;
 
@@ -32,6 +34,10 @@ Route::get('/lapor-k3', function () {
     return view('lapor-k3');
 });
 
+Route::get('/fkp', function () {
+    return view('fkp');
+});
+
 Route::get('/web', function () {
     return view('web');
 });
@@ -39,6 +45,9 @@ Route::get('/web', function () {
 Route::get('/faq', function () {
     return view('faq');
 });
+
+
+Route::get('/visitor-stats', [VisitorController::class, 'showVisitorStats']);
 
 route::get('/preview-email', [PaktaIntegritasController::class, 'previewEmail']);
 Route::get('/laporan/preview/{id}', [LaporSpgController::class, 'previewPdf'])->name('laporan.preview');
@@ -52,6 +61,9 @@ Route::prefix('user')->group(function () {
 
     // Rute untuk menyimpan laporan SPG (dapat diakses oleh user biasa)
     Route::post('/spg/lapor', [LaporSpgController::class, 'store'])->name('lapor.submit.user');
+    
+    // Rute untuk menyimpan fkp
+    Route::post('/fkp/store', [FkpController::class, 'store'])->name('fkp.submit.user');
 
     // Rute untuk menyimpan Studi Kelayakan Pengguna (dapat diakses oleh user biasa)
     Route::post('/studi-kelayakan/store', [StudiKelayakanController::class, 'store'])->name('studi-kelayakan.store');
@@ -86,6 +98,17 @@ Route::middleware(AdminMiddleware::class)->prefix('admin')->group(function () {
     Route::get('/lapor/edit/{id}', [LaporSpgController::class, 'edit'])->name('lapor-spg.edit');
     Route::put('/lapor/{id}', [LaporSpgController::class, 'update'])->name('lapor-spg.update');
     Route::delete('/lapor/{id}', [LaporSpgController::class, 'destroy'])->name('lapor-spg.destroy');
+    
+    // FKP Routes
+    Route::get('/fkp/add', [FkpController::class, 'create'])->name('fkp.add');
+    Route::post('/fkp/store', [FkpController::class, 'store'])->name('fkp.submit');
+    Route::get('/fkp', [FkpController::class, 'adminIndex'])->name('fkp.index');
+    Route::get('/fkp/export/excel', [FkpController::class, 'exportExcel'])->name('fkp.export');
+    Route::get('/fkp/export/pdf/{id}', [FkpController::class, 'downloadPdf'])->name('fkp.pdf');
+    Route::get('/fkp/edit/{id}', [FkpController::class, 'edit'])->name('fkp.edit');
+    Route::put('/fkp/{id}', [FkpController::class, 'update'])->name('fkp.update');
+    Route::delete('/fkp/{id}', [FkpController::class, 'destroy'])->name('fkp.destroy');
+    Route::get('/fkp/send-email/{id}', [FkpController::class, 'sendEmail'])->name('fkp.send-email');
 
     // K3 Routes
     Route::get('/lapork3/add', [K3Controller::class, 'create'])->name('lapork3.add');

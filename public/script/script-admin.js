@@ -290,104 +290,295 @@ document.addEventListener("click", function (event) {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    const chartCanvas = document.getElementById("suratMasukChart");
-    if (chartCanvas) {
-        var ctx = chartCanvas.getContext("2d");
-        // Inisialisasi Chart.js
-        var suratMasukChart = new Chart(ctx, {
-            type: "line",
-            data: {
-                labels: [
-                    "Januari",
-                    "Februari",
-                    "Maret",
-                    "April",
-                    "Mei",
-                    "Juni",
-                    "Juli",
-                    "Agustus",
-                    "September",
-                    "Oktober",
-                    "November",
-                    "Desember",
-                ],
-                datasets: [
-                    {
-                        label: "Jumlah Surat Masuk",
-                        data: monthlyData,
-                        backgroundColor: "rgba(54, 162, 235, 0.2)",
-                        borderColor: "rgba(54, 162, 235, 1)",
-                        borderWidth: 3,
-                        fill: true,
-                        tension: 0.4,
-                        pointBackgroundColor: "#8DC741",
-                        pointBorderColor: "rgba(54, 162, 235, 1)",
-                        pointBorderWidth: 2,
-                        pointRadius: 4,
-                        pointHoverRadius: 7,
-                        pointHitRadius: 10,
-                    },
-                ],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        grid: { display: false },
-                        ticks: {
-                            font: { size: 12 },
-                            padding: 15,
-                        },
-                    },
-                    y: { beginAtZero: true },
-                },
-                plugins: {
-                    legend: {
-                        display: true,
-                        labels: { font: { size: 14 } },
-                    },
-                    tooltip: {
-                        backgroundColor: "rgba(0, 0, 0, 0.7)",
-                        titleColor: "#fff",
-                        bodyColor: "#fff",
-                        borderColor: "#fff",
-                        borderWidth: 1,
-                    },
-                },
-            },
-        });
-
-        // Dropdown Tahun
-        const currentYear = new Date().getFullYear();
-        const dropdownTahun = document.getElementById("filterTahun");
-
-        if (dropdownTahun) {
-            for (let year = currentYear; year >= currentYear - 10; year--) {
-                let option = document.createElement("option");
-                option.value = year;
-                option.textContent = year;
-                dropdownTahun.appendChild(option);
-            }
-        }
-
-        // Fungsi untuk memperbarui chart
-        window.updateChart = function () {
-            var selectedCategory = document.getElementById("filterSurat").value;
-            var selectedYear = document.getElementById("filterTahun").value;
-
-            fetch(
-                `/admin/api/getDataSurat?year=${selectedYear}&category=${selectedCategory}`
-            )
-                .then((response) => response.json())
-                .then((data) => {
-                    suratMasukChart.data.datasets[0].data = data.monthlyData;
-                    suratMasukChart.update();
-                })
-                .catch((error) => console.error("Error fetching data:", error));
-        };
-
-        // Memuat data awal
-        updateChart();
-    }
+    // Initialize all charts
+    initPaktaIntegritasChart();
+    initUjiKelayakanChart();
+    initLaporSpgChart();
+    initLaporK3Chart();
+    initFkpChart();
 });
+
+// Utility function to setup year dropdown
+function setupYearDropdown(dropdownId) {
+    const currentYear = new Date().getFullYear();
+    const dropdown = document.getElementById(dropdownId);
+    if (dropdown) {
+        for (let year = currentYear; year >= currentYear - 10; year--) {
+            let option = document.createElement("option");
+            option.value = year;
+            option.textContent = year;
+            dropdown.appendChild(option);
+        }
+    }
+}
+
+// Common chart options
+const commonChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+        x: {
+            grid: { display: false },
+            ticks: {
+                font: { size: 12 },
+                padding: 15,
+            },
+        },
+        y: { beginAtZero: true },
+    },
+    plugins: {
+        legend: {
+            display: true,
+            labels: { font: { size: 14 } },
+        },
+        tooltip: {
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            titleColor: "#fff",
+            bodyColor: "#fff",
+            borderColor: "#fff",
+            borderWidth: 1,
+        },
+    },
+};
+
+// Common labels for months
+const monthLabels = [
+    "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+    "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+];
+
+// Pakta Integritas Chart
+function initPaktaIntegritasChart() {
+    const chartCanvas = document.getElementById("suratMasukChart");
+    if (!chartCanvas) return;
+
+    const ctx = chartCanvas.getContext("2d");
+    const paktaChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: monthLabels,
+            datasets: [{
+                label: "Jumlah Surat Masuk",
+                data: monthlyData,
+                backgroundColor: "rgba(54, 162, 235, 0.2)",
+                borderColor: "rgba(54, 162, 235, 1)",
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: "#8DC741",
+                pointBorderColor: "rgba(54, 162, 235, 1)",
+                pointBorderWidth: 2,
+                pointRadius: 4,
+                pointHoverRadius: 7,
+                pointHitRadius: 10,
+            }],
+        },
+        options: commonChartOptions
+    });
+
+    setupYearDropdown("filterTahun");
+
+    // Update chart based on filters
+    window.updateChart = function() {
+        const selectedCategory = document.getElementById("filterSurat").value;
+        const selectedYear = document.getElementById("filterTahun").value;
+
+        fetch(`/admin/api/getDataSurat?year=${selectedYear}&category=${selectedCategory}`)
+            .then(response => response.json())
+            .then(data => {
+                paktaChart.data.datasets[0].data = data.monthlyData;
+                paktaChart.update();
+            })
+            .catch(error => console.error("Error fetching data:", error));
+    };
+}
+
+// Uji Kelayakan Chart
+function initUjiKelayakanChart() {
+    const chartCanvas = document.getElementById("ujiKelayakanChart");
+    if (!chartCanvas) return;
+
+    const ctx = chartCanvas.getContext("2d");
+    const ujiKelayakanChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: monthLabels,
+            datasets: [{
+                label: "Jumlah Pengguna Jasa",
+                data: monthlyDataStudiKelayakan,
+                backgroundColor: "rgba(255, 159, 64, 0.2)",
+                borderColor: "rgba(255, 159, 64, 1)",
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: "#8DC741",
+                pointBorderColor: "rgba(255, 159, 64, 1)",
+                pointBorderWidth: 2,
+                pointRadius: 4,
+                pointHoverRadius: 7,
+                pointHitRadius: 10,
+            }, {
+                label: "Jumlah Penyedia Jasa",
+                data: monthlyDataPenyediaJasa,
+                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                borderColor: "rgba(75, 192, 192, 1)",
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: "#8DC741",
+                pointBorderColor: "rgba(75, 192, 192, 1)",
+                pointBorderWidth: 2,
+                pointRadius: 4,
+                pointHoverRadius: 7,
+                pointHitRadius: 10,
+            }],
+        },
+        options: commonChartOptions
+    });
+
+    setupYearDropdown("filterTahunUjiKelayakan");
+
+    window.updateUjiKelayakanChart = function() {
+        const selectedYear = document.getElementById("filterTahunUjiKelayakan").value;
+        
+        fetch(`/admin/api/getDataSurat?year=${selectedYear}`)
+            .then(response => response.json())
+            .then(data => {
+                ujiKelayakanChart.data.datasets[0].data = data.monthlyDataPenyediaJasa;
+                ujiKelayakanChart.update();
+            })
+            .catch(error => console.error("Error fetching data:", error));
+    };
+}
+
+// Laporan SPG Chart
+function initLaporSpgChart() {
+    const chartCanvas = document.getElementById("laporSpgChart");
+    if (!chartCanvas) return;
+
+    const ctx = chartCanvas.getContext("2d");
+    const laporSpgChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: monthLabels,
+            datasets: [{
+                label: "Jumlah Laporan SPG",
+                data: monthlyDataLaporSpg,
+                backgroundColor: "rgba(255, 99, 132, 0.2)",
+                borderColor: "rgba(255, 99, 132, 1)",
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: "#8DC741",
+                pointBorderColor: "rgba(255, 99, 132, 1)",
+                pointBorderWidth: 2,
+                pointRadius: 4,
+                pointHoverRadius: 7,
+                pointHitRadius: 10,
+            }],
+        },
+        options: commonChartOptions
+    });
+
+    setupYearDropdown("filterTahunSpg");
+
+    window.updateLaporSpgChart = function() {
+        const selectedYear = document.getElementById("filterTahunSpg").value;
+        
+        fetch(`/admin/api/getDataSurat?year=${selectedYear}`)
+            .then(response => response.json())
+            .then(data => {
+                laporSpgChart.data.datasets[0].data = data.monthlyDataLaporSpg;
+                laporSpgChart.update();
+            })
+            .catch(error => console.error("Error fetching data:", error));
+    };
+}
+
+// Laporan K3 Chart
+function initLaporK3Chart() {
+    const chartCanvas = document.getElementById("laporK3Chart");
+    if (!chartCanvas) return;
+
+    const ctx = chartCanvas.getContext("2d");
+    const laporK3Chart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: monthLabels,
+            datasets: [{
+                label: "Jumlah Laporan K3",
+                data: monthlyDataLaporK3,
+                backgroundColor: "rgba(153, 102, 255, 0.2)",
+                borderColor: "rgba(153, 102, 255, 1)",
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: "#8DC741",
+                pointBorderColor: "rgba(153, 102, 255, 1)",
+                pointBorderWidth: 2,
+                pointRadius: 4,
+                pointHoverRadius: 7,
+                pointHitRadius: 10,
+            }],
+        },
+        options: commonChartOptions
+    });
+
+    setupYearDropdown("filterTahunK3");
+
+    window.updateLaporK3Chart = function() {
+        const selectedYear = document.getElementById("filterTahunK3").value;
+        
+        fetch(`/admin/api/getDataSurat?year=${selectedYear}`)
+            .then(response => response.json())
+            .then(data => {
+                laporK3Chart.data.datasets[0].data = data.monthlyDataLaporK3;
+                laporK3Chart.update();
+            })
+            .catch(error => console.error("Error fetching data:", error));
+    };
+}
+
+// Laporan FKP
+function initFkpChart() {
+    const chartCanvas = document.getElementById("fkpChart");
+    if (!chartCanvas) return;
+
+    const ctx = chartCanvas.getContext("2d");
+    const fkpChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: monthLabels,
+            datasets: [{
+                label: "Jumlah Laporan FKP",
+                data: monthlyDataFkp,
+                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                borderColor: "rgba(75, 192, 192, 1)",
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: "#8DC741",
+                pointBorderColor: "rgba(75, 192, 192, 1)",
+                pointBorderWidth: 2,
+                pointRadius: 4,
+                pointHoverRadius: 7,
+                pointHitRadius: 10,
+            }],
+        },
+        options: commonChartOptions
+    });
+
+    setupYearDropdown("filterTahunFkp");
+
+    window.updateFkpChart = function() {
+        const selectedYear = document.getElementById("filterTahunFkp").value;
+        
+        fetch(`/admin/api/getDataSurat?year=${selectedYear}`)
+            .then(response => response.json())
+            .then(data => {
+                fkpChart.data.datasets[0].data = data.monthlyDataFkp;
+                fkpChart.update();
+            })
+            .catch(error => console.error("Error fetching data:", error));
+    };
+}

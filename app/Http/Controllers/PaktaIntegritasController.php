@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PaktaIntegritas;
+use App\Models\StudiKelayakan;
+use App\Models\PenyediaJasa;
+use App\Models\LaporSpg;
+use App\Models\LaporK3;
+use App\Models\FkpForm;
 use App\Exports\PaktaIntegritasExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -24,7 +29,32 @@ class PaktaIntegritasController extends Controller
             ->groupBy('month')
             ->pluck('total', 'month');
 
-        // Menghitung jumlah surat per kategori (pegawai, penyedia jasa, pengguna jasa, auditor)
+        // Menghitung jumlah laporan dari model StudiKelayakan
+        $laporanStudiKelayakanPerBulan = StudiKelayakan::select(DB::raw('MONTH(created_at) as month'), DB::raw('count(*) as total'))
+            ->groupBy('month')
+            ->pluck('total', 'month');
+
+        // Menghitung jumlah laporan dari model PenyediaJasa
+        $laporanPenyediaJasaPerBulan = PenyediaJasa::select(DB::raw('MONTH(created_at) as month'), DB::raw('count(*) as total'))
+            ->groupBy('month')
+            ->pluck('total', 'month');
+
+        // Menghitung jumlah laporan dari model LaporSpg
+        $laporanSpgPerBulan = LaporSpg::select(DB::raw('MONTH(created_at) as month'), DB::raw('count(*) as total'))
+            ->groupBy('month')
+            ->pluck('total', 'month');
+
+        // Menghitung jumlah laporan dari model LaporK3
+        $laporanK3PerBulan = LaporK3::select(DB::raw('MONTH(created_at) as month'), DB::raw('count(*) as total'))
+            ->groupBy('month')
+            ->pluck('total', 'month');
+        
+        // Menghitung jumlah laporan dari model FKP
+        $laporanFkpPerBulan = FkpForm::select(DB::raw('MONTH(created_at) as month'), DB::raw('count(*) as total'))
+        ->groupBy('month')
+        ->pluck('total', 'month');
+
+        // Menghitung jumlah laporan per kategori (pegawai, penyedia jasa, pengguna jasa, auditor)
         $roles = ['pegawai', 'penyedia-jasa', 'pengguna-jasa', 'auditor'];
         $monthlyDataByRole = [];
 
@@ -42,12 +72,24 @@ class PaktaIntegritasController extends Controller
         $monthlyDataPengguna = [];
         $monthlyDataAuditor = [];
 
+        $monthlyDataStudiKelayakan = [];
+        $monthlyDataPenyediaJasa = [];
+        $monthlyDataLaporSpg = [];
+        $monthlyDataLaporK3 = [];
+        $monthlyDataFkp = [];
+
         for ($i = 1; $i <= 12; $i++) {
             $monthlyData[$i] = $suratMasukPerBulan[$i] ?? 0; // Semua kategori
             $monthlyDataPegawai[$i] = $monthlyDataByRole['pegawai'][$i] ?? 0; // Pegawai
             $monthlyDataPenyedia[$i] = $monthlyDataByRole['penyedia-jasa'][$i] ?? 0; // Penyedia Jasa
             $monthlyDataPengguna[$i] = $monthlyDataByRole['pengguna-jasa'][$i] ?? 0; // Pengguna Jasa
             $monthlyDataAuditor[$i] = $monthlyDataByRole['auditor'][$i] ?? 0; // Auditor
+
+            $monthlyDataStudiKelayakan[$i] = $laporanStudiKelayakanPerBulan[$i] ?? 0; // Data dari StudiKelayakan
+            $monthlyDataPenyediaJasa[$i] = $laporanPenyediaJasaPerBulan[$i] ?? 0; // Data dari PenyediaJasa
+            $monthlyDataLaporSpg[$i] = $laporanSpgPerBulan[$i] ?? 0; // Data dari LaporSpg
+            $monthlyDataLaporK3[$i] = $laporanK3PerBulan[$i] ?? 0; // Data dari LaporK3
+            $monthlyDataFkp[$i] = $laporanFkpPerBulan[$i] ?? 0;
         }
 
         // Memulai query untuk mendapatkan data berdasarkan role
@@ -72,14 +114,23 @@ class PaktaIntegritasController extends Controller
         // Melakukan paginasi pada hasil query
         $data = $query->orderBy('created_at', 'desc')->paginate(10);
 
+        // Menghitung jumlah berdasarkan role
         $roleCounts = PaktaIntegritas::select('role', DB::raw('count(*) as total'))
             ->groupBy('role')
             ->pluck('total', 'role');
 
+        // Hitung laporan dari setiap model
         $countPegawai = $roleCounts['pegawai'] ?? 0;
         $countPenyediaJasa = $roleCounts['penyedia-jasa'] ?? 0;
         $countPenggunaJasa = $roleCounts['pengguna-jasa'] ?? 0;
         $countAuditor = $roleCounts['auditor'] ?? 0;
+
+        // Hitung total dari model lainnya
+        $countStudiKelayakan = StudiKelayakan::count();
+        $countPenyediaJasaTotal = PenyediaJasa::count();
+        $countLaporSpg = LaporSpg::count();
+        $countLaporK3 = LaporK3::count();
+        $countFkp = FkpForm::count();
 
         // Mengirimkan data ke view sesuai dengan role yang dipilih
         if ($role) {
@@ -89,7 +140,12 @@ class PaktaIntegritasController extends Controller
                 'countPegawai',
                 'countPenyediaJasa',
                 'countPenggunaJasa',
-                'countAuditor'
+                'countAuditor',
+                'countStudiKelayakan',
+                'countPenyediaJasaTotal',
+                'countLaporSpg',
+                'countLaporK3',
+                'countFkp'
             ));
         } else {
             return view('admin.admin_home', compact(
@@ -98,10 +154,20 @@ class PaktaIntegritasController extends Controller
                 'monthlyDataPenyedia',
                 'monthlyDataPengguna',
                 'monthlyDataAuditor',
+                'monthlyDataStudiKelayakan',
+                'monthlyDataPenyediaJasa',
+                'monthlyDataLaporSpg',
+                'monthlyDataLaporK3',
+                'monthlyDataFkp',
                 'countPegawai',
                 'countPenyediaJasa',
                 'countPenggunaJasa',
-                'countAuditor'
+                'countAuditor',
+                'countStudiKelayakan',
+                'countPenyediaJasaTotal',
+                'countLaporSpg',
+                'countLaporK3',
+                'countFkp'
             ));
         }
     }
@@ -114,25 +180,62 @@ class PaktaIntegritasController extends Controller
         // Query dasar untuk mendapatkan data surat berdasarkan tahun
         $query = PaktaIntegritas::whereYear('created_at', $year);
 
-        // Filter berdasarkan kategori
+        // Filter berdasarkan kategori untuk PaktaIntegritas
         if ($category !== 'semua') {
             $query->where('role', $category);
         }
 
-        // Menghitung jumlah surat masuk per bulan untuk tahun tertentu
+        // Menghitung jumlah surat masuk per bulan untuk tahun tertentu dari PaktaIntegritas
         $suratMasukPerBulan = $query
             ->select(DB::raw('MONTH(created_at) as month'), DB::raw('count(*) as total'))
             ->groupBy('month')
             ->pluck('total', 'month');
 
-        // Menyiapkan array untuk data per bulan (1 sampai 12)
+        // Query untuk data dari PenyediaJasa
+        $penyediaJasaPerBulan = PenyediaJasa::whereYear('created_at', $year)
+            ->select(DB::raw('MONTH(created_at) as month'), DB::raw('count(*) as total'))
+            ->groupBy('month')
+            ->pluck('total', 'month');
+
+        // Query untuk data dari LaporSpg
+        $laporSpgPerBulan = LaporSpg::whereYear('created_at', $year)
+            ->select(DB::raw('MONTH(created_at) as month'), DB::raw('count(*) as total'))
+            ->groupBy('month')
+            ->pluck('total', 'month');
+
+        // Query untuk data dari LaporK3
+        $laporK3PerBulan = LaporK3::whereYear('created_at', $year)
+            ->select(DB::raw('MONTH(created_at) as month'), DB::raw('count(*) as total'))
+            ->groupBy('month')
+            ->pluck('total', 'month');
+
+        //  Query untuk data dari Fkp
+        $fkpPerBulan = FkpForm::whereYear('created_at', $year)
+        ->select(DB::raw('MONTH(created_at) as month'), DB::raw('count(*) as total'))
+        ->groupBy('month')
+        ->pluck('total', 'month');
+
+        // Menyiapkan array untuk data per bulan (1 sampai 12) untuk semua model
         $monthlyData = [];
+        $monthlyDataPenyediaJasa = [];
+        $monthlyDataLaporSpg = [];
+        $monthlyDataLaporK3 = [];
+        $monthlyDataFkp = [];
+
         for ($i = 1; $i <= 12; $i++) {
             $monthlyData[$i] = $suratMasukPerBulan[$i] ?? 0;
+            $monthlyDataPenyediaJasa[$i] = $penyediaJasaPerBulan[$i] ?? 0;
+            $monthlyDataLaporSpg[$i] = $laporSpgPerBulan[$i] ?? 0;
+            $monthlyDataLaporK3[$i] = $laporK3PerBulan[$i] ?? 0;
+            $monthlyDataFkp[$i] = $fkpPerBulan[$i] ?? 0;
         }
 
         return response()->json([
             'monthlyData' => array_values($monthlyData),
+            'monthlyDataPenyediaJasa' => array_values($monthlyDataPenyediaJasa),
+            'monthlyDataLaporSpg' => array_values($monthlyDataLaporSpg),
+            'monthlyDataLaporK3' => array_values($monthlyDataLaporK3),
+            'monthlyDataFkp' => array_values($monthlyDataFkp),
         ]);
     }
 

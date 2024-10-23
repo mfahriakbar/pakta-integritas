@@ -6,6 +6,7 @@ use App\Models\LaporSpg;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\LaporSpgSubmitted;
 use Maatwebsite\Excel\Facades\Excel;
@@ -212,13 +213,18 @@ class LaporSpgController extends Controller
         $dataGambar = file_get_contents($path);
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($dataGambar);
 
-        $evidencePath = Storage::path($laporanSpg->evidence);
-        if (file_exists($evidencePath)) {
-            $evidenceData = base64_encode(file_get_contents($evidencePath));
-            $evidenceBase64 = 'data:image/png;base64,' . $evidenceData;
+        if ($laporanSpg->evidence) {
+            $evidencePath = Storage::path($laporanSpg->evidence);
+            if (file_exists($evidencePath)) {
+                $evidenceData = base64_encode(file_get_contents($evidencePath));
+                $evidenceBase64 = 'data:image/png;base64,' . $evidenceData;
+            } else {
+                $evidenceBase64 = null;
+            }
         } else {
             $evidenceBase64 = null;
         }
+        
 
         // Render view PDF
         $html = view('template.laporan_pdf', compact('laporanSpg', 'pernyataan', 'perjanjian', 'base64', 'judul', 'evidenceBase64'))->render();

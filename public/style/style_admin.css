@@ -795,6 +795,15 @@ header h1 {
     margin: auto;
 }
 
+.icon-action.mail {
+    background-color: #0077b6; /* Customize background color */
+    color: white;
+}
+
+.icon-action.mail:hover {
+    background-color: #005482; /* Darker shade on hover */
+}
+
 .icon-action.print {
     background-color: #276ef1;
     color: white;
