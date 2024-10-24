@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="employeeId">ID Pegawai: <span>*</span></label>
+                    <label for="employeeId">NIP: <span>*</span></label>
                     <input type="text" id="employeeId" name="employeeId" value="{{ old('employeeId', $fkpForm->employee_id) }}" required>
                 </div>
 
@@ -58,7 +58,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="department">Departemen: <span>*</span></label>
+                    <label for="department">Bagian: <span>*</span></label>
                     <input type="text" id="department" name="department" value="{{ old('department', $fkpForm->department) }}" required>
                 </div>
 

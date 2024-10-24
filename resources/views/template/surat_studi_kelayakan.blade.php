@@ -12,7 +12,7 @@
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7LxvasEXsbtEQpoPQ9UNLVlFMpgkNz86-vw&s" alt="" style='width: 120px; margin: 10px;'>
         </div>
         <div class="header-title">
-            <h1 style="color: white; text-align:center; padding-bottom: 5px; width: 100%; background-color: #0077b6;">STUDI KELAYAKAN BPMSPH</h1>
+            <h1 style="color: white; text-align:center; padding-bottom: 5px; width: 100%; background-color: #0077b6;">Uji Kelayakan Pengguna Jasa BPMSPH</h1>
         </div>
         <div class="content" style="color: black;">
             <p>Yth. Bapak/Ibu {{ $studiKelayakan->nama_pengguna }},</p>

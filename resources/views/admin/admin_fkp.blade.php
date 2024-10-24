@@ -4,17 +4,6 @@
 
 @section('content')
 
-<style>
-    .icon-action.mail {
-    background-color: #0077b6; /* Customize background color */
-    color: white;
-    }
-
-    .icon-action.mail:hover {
-        color: black; /* Darker shade on hover */
-    }
-</style>
-
 <header>
     <h1>Tabel Formulir Laporan FKP</h1>
 </header>

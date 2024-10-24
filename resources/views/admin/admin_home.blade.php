@@ -243,7 +243,7 @@
     var monthlyDataPengguna = {!! json_encode(array_values($monthlyDataPengguna)) !!}; // Data Pengguna Jasa
     var monthlyDataAuditor = {!! json_encode(array_values($monthlyDataAuditor)) !!}; // Data Auditor
 
-    // New monthly data for additional models
+    // selain Pakta Integritas
     var monthlyDataStudiKelayakan = {!! json_encode(array_values($monthlyDataStudiKelayakan)) !!}; // Data Studi Kelayakan
     var monthlyDataPenyediaJasa = {!! json_encode(array_values($monthlyDataPenyediaJasa)) !!}; // Data Penyedia Jasa
     var monthlyDataLaporSpg = {!! json_encode(array_values($monthlyDataLaporSpg)) !!}; // Data Lapor Spg

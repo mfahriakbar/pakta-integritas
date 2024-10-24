@@ -46,9 +46,6 @@ Route::get('/faq', function () {
     return view('faq');
 });
 
-
-Route::get('/visitor-stats', [VisitorController::class, 'showVisitorStats']);
-
 route::get('/preview-email', [PaktaIntegritasController::class, 'previewEmail']);
 Route::get('/laporan/preview/{id}', [LaporSpgController::class, 'previewPdf'])->name('laporan.preview');
 Route::get('/download-studi-kelayakan/{id}', [StudiKelayakanController::class, 'downloadPdf'])->name('download.studi-kelayakan');

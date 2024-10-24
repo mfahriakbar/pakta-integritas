@@ -157,7 +157,7 @@
             <img src="{{ $base64 }}" alt="Kop Surat">
         </div>
         <div class="header-text">
-            <h2>PARTISIPASI DAN KONSULTASI K3</h2>
+            <h2>KONSULTASI DAN PARTISIPASI K3</h2>
         </div>
     </div>
 

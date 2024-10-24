@@ -325,52 +325,53 @@ nav {
     margin-top: 10px;
 }
 
-.dropdown-admin {
+.dropdown-admin,
+.dropdown-uji-kelayakan {
     width: 100%;
     position: relative;
 }
 
-/* Global Styles */
-.dropdown-admin, .dropdown-uji-kelayakan {
-    width: 100%;
-    position: relative;
-}
-
-.dropdown-admin * , .dropdown-uji-kelayakan * {
+.dropdown-admin *,
+.dropdown-uji-kelayakan * {
     box-sizing: border-box;
 }
 
-/* Styles for Select Element */
-.select-admin, .select-uji-kelayakan {
+.select-admin,
+.select-uji-kelayakan {
     color: #fff;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
     cursor: pointer;
-    transition: background 0.3s, color 0.3s; /* Added color transition */
+    transition: background 0.3s, color 0.3s;
     margin: 0;
 }
 
-.select-admin h4, .select-uji-kelayakan h4 {
+.select-admin h4,
+.select-uji-kelayakan h4 {
     margin-right: 13px;
 }
 
-/* Hover Effects */
-.select-admin:hover, .select-uji-kelayakan:hover {
-    background: #0077b6; /* Changed hover background */
-    color: #fff; /* Changed hover text color */
+.select-admin:hover,
+.select-uji-kelayakan:hover {
+    background: #0077b6;
+    color: #fff;
 }
 
-/* Caret Rotation */
-.select-admin .fa-caret-down-rotate, .select-uji-kelayakan .fa-caret-down-rotate {
+.select-admin-clicked {
+    background: #0077b6;
+}
+
+.fa-caret-down-rotate {
     transform: rotate(180deg);
 }
 
-/* Dropdown Menu Styles */
-.menu-admin, .menu-uji-kelayakan {
+.menu-admin,
+.menu-uji-kelayakan {
     list-style: none;
     padding: 10px;
+    background: #0077b6;
     color: #fff;
     position: absolute;
     top: 100%;
@@ -379,36 +380,46 @@ nav {
     transform: translateX(-50%);
     opacity: 0;
     display: none;
-    transition: opacity 0.3s ease-in-out; /* Adjusted transition for smoothness */
+    transition: opacity 0.3s ease-in-out;
     z-index: 1;
 }
 
-.menu-admin, .menu-uji-kelayakan a {
+.menu-admin a,
+.menu-uji-kelayakan a {
     color: #fff;
+    text-decoration: none;
 }
 
-/* Menu Item Styles */
-.menu-admin li, .menu-uji-kelayakan li {
+.menu-admin li,
+.menu-uji-kelayakan li {
     padding: 10px;
     cursor: pointer;
     width: 100%;
-    transition: background 0.3s, color 0.3s; /* Added transition for menu items */
+    transition: background 0.3s, color 0.3s;
 }
 
-.menu-admin li:hover, .menu-uji-kelayakan li:hover {
+.menu-admin li:hover,
+.menu-uji-kelayakan li:hover {
     background: #fff;
     color: #0077b6;
 }
 
-/* Open State */
-.menu-admin-open, .menu-uji-kelayakan-open {
+.menu-admin-open,
+.menu-uji-kelayakan-open {
     display: block;
     opacity: 1;
 }
 
-/* Active State for Selected Option */
 .active {
     background-color: #0e8345;
+}
+
+.box-admin-akun {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
 }
 
 /* Admin Content Area */
@@ -796,12 +807,12 @@ header h1 {
 }
 
 .icon-action.mail {
-    background-color: #0077b6; /* Customize background color */
+    background-color: #0077b6; 
     color: white;
 }
 
 .icon-action.mail:hover {
-    background-color: #005482; /* Darker shade on hover */
+    color: black; 
 }
 
 .icon-action.print {

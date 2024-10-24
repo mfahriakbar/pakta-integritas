@@ -111,6 +111,16 @@
                     </div>
                     <h5>Lapor Kecelakaan Kerja K3 BPMSPH</h5>
                 </a>
+                <a href="/fkp"
+                    class="layanan-content-isi">
+                    <div class="layanan-content-title">
+                        <figure class="layanan-img">
+                            <img src="assets/k3.png" alt="">
+                        </figure>
+                        <span class="view-text">View</span>
+                    </div>
+                    <h5>Form Konsultasi dan Partisipasi K3 (FKP)</h5>
+                </a>
             </div>
         </div>
 
