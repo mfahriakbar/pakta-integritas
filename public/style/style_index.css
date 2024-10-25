@@ -1491,6 +1491,11 @@ footer {
     padding-bottom: 12px;
 }
 
+.footer-visitor-count ul li {
+    list-style: none;
+    padding-bottom: 12px;
+}
+
 .footer-sosmed a {
     text-decoration: none;
     color: white;

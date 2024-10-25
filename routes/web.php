@@ -11,6 +11,8 @@ use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Middleware\AdminMiddleware;
 
+Route::post('/visitors/record', [VisitorController::class, 'record'])->name('visitors.record');
+
 // Public Routes
 Route::get('/', function () {
     return view('index');
@@ -36,6 +38,14 @@ Route::get('/lapor-k3', function () {
 
 Route::get('/fkp', function () {
     return view('fkp');
+});
+
+Route::get('/Pelatihan', function () {
+    return view('Pelatihan');
+});
+
+Route::get('/Survei', function () {
+    return view('Survei');
 });
 
 Route::get('/web', function () {

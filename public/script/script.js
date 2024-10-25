@@ -185,3 +185,65 @@ document.addEventListener("DOMContentLoaded", function () {
         title.appendChild(span);
     });
 });
+
+function getTodayDate() {
+    return new Date().toISOString().split('T')[0];
+}
+
+// Fungsi untuk mendapatkan tanggal kemarin
+function getYesterdayDate() {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    return yesterday.toISOString().split('T')[0];
+}
+
+// Fungsi untuk menginisialisasi atau memperbarui data pengunjung
+function updateVisitorCount() {
+    // Mengambil data dari localStorage
+    let visitorData = JSON.parse(localStorage.getItem('visitorData')) || {
+        totalVisitors: 0,
+        dateVisits: {}
+    };
+
+    const today = getTodayDate();
+    const yesterday = getYesterdayDate();
+
+    // Inisialisasi kunjungan hari ini jika belum ada
+    if (!visitorData.dateVisits[today]) {
+        visitorData.dateVisits[today] = 0;
+    }
+
+    // Menambah pengunjung hari ini
+    visitorData.dateVisits[today]++;
+    // Menambah total pengunjung
+    visitorData.totalVisitors++;
+
+    // Menyimpan data ke localStorage
+    localStorage.setItem('visitorData', JSON.stringify(visitorData));
+
+    // Memperbarui tampilan
+    document.getElementById('totalVisitors').textContent = visitorData.totalVisitors;
+    document.getElementById('todayVisitors').textContent = visitorData.dateVisits[today] || 0;
+    document.getElementById('yesterdayVisitors').textContent = visitorData.dateVisits[yesterday] || 0;
+}
+
+// Fungsi untuk menampilkan data pengunjung saat halaman dimuat
+function displayVisitorCount() {
+    const visitorData = JSON.parse(localStorage.getItem('visitorData')) || {
+        totalVisitors: 0,
+        dateVisits: {}
+    };
+
+    const today = getTodayDate();
+    const yesterday = getYesterdayDate();
+
+    document.getElementById('totalVisitors').textContent = visitorData.totalVisitors;
+    document.getElementById('todayVisitors').textContent = visitorData.dateVisits[today] || 0;
+    document.getElementById('yesterdayVisitors').textContent = visitorData.dateVisits[yesterday] || 0;
+}
+
+// Menjalankan fungsi saat halaman dimuat
+document.addEventListener('DOMContentLoaded', function() {
+    displayVisitorCount();
+    updateVisitorCount();
+});

@@ -34,6 +34,7 @@
 
     <!-- Script -->
     <script src="{{ asset('script/script.js') }}"></script>
+    <script src="{{ asset('js/visitor-counter.js') }}"></script>
 </body>
 
 </html>

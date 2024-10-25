@@ -7,6 +7,14 @@
             <p>Email: <a href="mailto:bpmsph@pertanian.go.id">bpmsph@pertanian.go.id</a></p>
             <p>Tel/Fax: +62-251-8377111, +62-251-8353712</p>
         </div>
+        <div class="footer-visitor-count">
+            <h3 style="margin-bottom: 25px;">Jumlah Pengunjung</h3>
+            <ul>
+                <li><p><i class="fa-solid fa-users"></i> Total Pengunjung: <span id="totalVisitors">0</span></p></li>
+                <li><p><i class="fa-solid fa-user-clock"></i> Pengunjung Hari Ini: <span id="todayVisitors">0</span></p></li>
+                <li><p><i class="fa-solid fa-user-friends"></i> Pengunjung Kemarin: <span id="yesterdayVisitors">0</span></p></li>
+            </ul>
+        </div>
         <div class="footer-sosmed">
             <h3>Sosial Media & Chat</h3>
             <ul>

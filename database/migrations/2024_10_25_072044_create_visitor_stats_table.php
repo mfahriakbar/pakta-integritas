@@ -6,21 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up()
     {
-        Schema::create('visitor_logs', function (Blueprint $table) {
+        Schema::create('visitor_stats', function (Blueprint $table) {
             $table->id();
-            $table->string('ip_address');
-            $table->date('visit_date'); // Menyimpan tanggal kunjungan
+            $table->date('visit_date');
+            $table->integer('visit_count')->default(0);
             $table->timestamps();
+            
+            $table->unique('visit_date');
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('visitor_logs');
+        Schema::dropIfExists('visitor_stats');
     }
 };

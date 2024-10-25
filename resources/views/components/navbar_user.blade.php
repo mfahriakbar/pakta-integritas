@@ -46,6 +46,8 @@
                         Internal</a></li>
                 <li><a href="https://sites.google.com/view/smapbpmsph/agenda-sosialisasi-pk/audit-eksternal">Audit
                         Eksternal</a></li>
+                <li><a href="/Pelatihan">Pelatihan</a></li>
+                <li><a href="/Survei">Survei</a></li>
             </ul>
         </li>
         <li class="dropdown">
