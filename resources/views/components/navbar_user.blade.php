@@ -48,6 +48,7 @@
                         Eksternal</a></li>
                 <li><a href="/Pelatihan">Pelatihan</a></li>
                 <li><a href="/Survei">Survei</a></li>
+                <li><a href="/absensi">Absensi</a></li>
             </ul>
         </li>
         <li class="dropdown">
