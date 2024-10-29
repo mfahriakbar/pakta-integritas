@@ -7,6 +7,7 @@ use App\Http\Controllers\PenyediaJasaController;
 use App\Http\Controllers\StudiKelayakanController;
 use App\Http\Controllers\K3Controller;
 use App\Http\Controllers\FkpController;
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Middleware\AdminMiddleware;
@@ -56,6 +57,10 @@ Route::get('/faq', function () {
     return view('faq');
 });
 
+Route::get('/absensi', function () {
+    return view('absen');
+});
+
 route::get('/preview-email', [PaktaIntegritasController::class, 'previewEmail']);
 Route::get('/laporan/preview/{id}', [LaporSpgController::class, 'previewPdf'])->name('laporan.preview');
 Route::get('/download-studi-kelayakan/{id}', [StudiKelayakanController::class, 'downloadPdf'])->name('download.studi-kelayakan');
@@ -77,6 +82,9 @@ Route::prefix('user')->group(function () {
 
     // Rute untuk menyimpan laporan K3 (dapat diakses oleh user biasa)
     Route::post('/lapork3/store', [K3Controller::class, 'store'])->name('lapork3.submit.user');
+
+    // Rute untuk menyimpan laporan K3 (dapat diakses oleh user biasa)
+    Route::post('/absensi/store', [ActivityController::class, 'store'])->name('absen.store');
 });
 
 
@@ -148,6 +156,17 @@ Route::middleware(AdminMiddleware::class)->prefix('admin')->group(function () {
     Route::get('/penyedia-jasa/export/{status?}', [PenyediaJasaController::class, 'export'])->name('penyedia-jasa.export');
     Route::get('/penyedia-jasa/download-pdf/{id}', [PenyediaJasaController::class, 'downloadPdf'])->name('penyedia-jasa.downloadPdf');
     Route::get('/penyedia-jasa/view-laporan/{id}', [PenyediaJasaController::class, 'viewLaporan'])->name('penyedia-jasa.viewLaporan');
+    
+    //Routes Absen
+    Route::get('/absen', [ActivityController::class, 'index'])->name('absen.index');
+    Route::get('/absen/create', [ActivityController::class, 'create'])->name('absen.add');
+    Route::post('/absen/store', [ActivityController::class, 'store'])->name('absen.store');
+    Route::get('/absen/edit/{id}', [ActivityController::class, 'edit'])->name('absen.edit');
+    Route::put('/absen/{id}', [ActivityController::class, 'update'])->name('absen.update');
+    Route::delete('/absen/{id}', [ActivityController::class, 'destroy'])->name('absen.destroy');
+    Route::get('/absen/export/{status?}', [ActivityController::class, 'export'])->name('absen.export');
+    Route::get('/absen/{id}/download-pdf', [ActivityController::class, 'downloadPdf'])->name('absen.downloadPdf');
+    Route::get('/absen/view-laporan/{id}', [ActivityController::class, 'viewLaporan'])->name('absen.viewLaporan');
 
     Route::get('/{role?}', [PaktaIntegritasController::class, 'index'])->name('admin.role');
     Route::post('/add/{role}', [PaktaIntegritasController::class, 'store'])->name('integritas.store.admin');

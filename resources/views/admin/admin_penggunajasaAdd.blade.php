@@ -6,7 +6,7 @@
     </header>
     <hr class="header-line">
     <div class="isi-form" id="isi-form">
-        <form action="{{ route('studi-kelayakan.store') }}" method="POST" enctype="multipart/form-data" id="form-container"
+        <form action="{{ route('studi-kelayakan.store.admin') }}" method="POST" enctype="multipart/form-data" id="form-container"
             class="form-container">
             @csrf
             <input type="hidden" name="is_admin" value="true">
