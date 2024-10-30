@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,7 +62,7 @@
             margin-top: 30px;
             position: absolute;
             bottom: 30px; /* Menempatkan signature di bagian bawah halaman */
-            width: 80%;
+            width: 85%;
             display: flex;
             justify-content: space-between;
             padding-left: 2cm;
@@ -97,7 +97,7 @@
             border: 1px solid #000;
             padding: 15px;
             margin: 20px 0;
-            min-height: 200px;
+            min-height: 250px;
         }
 
         .attendance-table {
@@ -130,10 +130,10 @@
 </head>
 <body>
     <!-- Cover Page -->
+    <div class="kop-surat">
+        <img src="{{ $base64 }}" alt="Letterhead">
+    </div>
     <div class="cover-page">
-        <div class="kop-surat">
-            <img src="{{ $base64 }}" alt="Letterhead">
-        </div>
         
         <div>
             <div class="cover-title">FORM REKAMAN<br>PELAKSANAAN KEGIATAN</div>
@@ -168,7 +168,7 @@
             <tr>
                 <td>2</td>
                 <td>Hari dan Tanggal</td>
-                <td>{{ \Carbon\Carbon::parse($activity->activity_date)->isoFormat('dddd, D MMMM Y') }}</td>
+                <td>{{ \Carbon\Carbon::parse($activity->activity_date)->locale('id')->isoFormat('dddd, D MMMM Y') }}</td>
             </tr>
             <tr>
                 <td>3</td>
@@ -203,10 +203,10 @@
         <table class="attendance-table">
             <thead>
                 <tr>
-                    <th>NO</th>
-                    <th>NAMA PESERTA</th>
-                    <th>JABATAN/ASAL INSTANSI</th>
-                    <th>TANDA TANGAN</th>
+                    <th style="text-align: center;">NO</th>
+                    <th style="text-align: center;">NAMA PESERTA</th>
+                    <th style="text-align: center;">JABATAN/ASAL INSTANSI</th>
+                    <th style="text-align: center;">TANDA TANGAN</th>
                 </tr>
             </thead>
             <tbody>
@@ -215,7 +215,7 @@
                     <td>{{ $key + 1 }}</td>
                     <td>{{ $participant->name }}</td>
                     <td>{{ $participant->position }}</td>
-                    <td>
+                    <td style="text-align: center;">
                         <img class="qr-code" src="data:image/svg+xml;base64,{{ $participant->qr_code }}" alt="QR Code">
                     </td>
                 </tr>

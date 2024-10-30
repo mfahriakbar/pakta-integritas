@@ -52,29 +52,36 @@
             </a>
         </ul>
     </div>
+
+    <div class="dropdown-laporan">
+        <div class="select-laporan">
+            <i class="fas fa-file-alt"></i>
+            <h4 class="selected">Laporan</h4>
+            <i class="fa-solid fa-caret-down"></i>
+        </div>
+        <ul class="menu-laporan">
+            <a href="/admin/lapor">
+                <li>Lapor Spg</li>
+            </a>
+            <a href="/admin/k3">
+                <li>Lapor K3</li>
+            </a>
+            <a href="/admin/fkp">
+                <li>Lapor FKP</li>
+            </a>
+        </ul>
+    </div>
     
-    <a href="/admin/lapor">
-        <div class="box-admin-akun">
-            <i class="fas fa-file-alt"></i>
-            <h4>Lapor SPG</h4>
-        </div>
-    </a>
-    <a href="/admin/k3">
-        <div class="box-admin-akun">
-            <i class="fas fa-file-alt"></i>
-            <h4>Lapor K3</h4>
-        </div>
-    </a>
-    <a href="/admin/fkp">
-        <div class="box-admin-akun">
-            <i class="fas fa-file-alt"></i>
-            <h4>Laporan Fkp</h4>
-        </div>
-    </a>
     <a href="/admin/absen">
         <div class="box-admin-akun">
             <i class="fas fa-file-alt"></i>
             <h4>Absensi</h4>
+        </div>
+    </a>
+    <a href="/admin/dumas">
+        <div class="box-admin-akun">
+            <i class="fas fa-file-alt"></i>
+            <h4>Dumas</h4>
         </div>
     </a>
     <a href="{{ route('admin.account') }}">

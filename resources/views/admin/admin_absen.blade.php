@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 
-@section('title', 'Tabel Absensi')
+@section('title', 'Tabel Rekaman Kegiatan')
 
 @section('content')
 
 <header>
-    <h1>Tabel Absensi</h1>
+    <h1>Tabel Rekaman Kegiatan</h1>
 </header>
 <hr class="header-line">
 

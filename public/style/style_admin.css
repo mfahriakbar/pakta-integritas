@@ -365,18 +365,21 @@ nav {
 }
 
 .dropdown-admin,
-.dropdown-uji-kelayakan {
+.dropdown-uji-kelayakan,
+.dropdown-laporan {
     width: 100%;
     position: relative;
 }
 
 .dropdown-admin *,
-.dropdown-uji-kelayakan * {
+.dropdown-uji-kelayakan *,
+.dropdown-laporan * {
     box-sizing: border-box;
 }
 
 .select-admin,
-.select-uji-kelayakan {
+.select-uji-kelayakan,
+.select-laporan {
     color: #fff;
     display: flex;
     justify-content: space-between;
@@ -388,17 +391,21 @@ nav {
 }
 
 .select-admin h4,
-.select-uji-kelayakan h4 {
+.select-uji-kelayakan h4,
+.select-laporan h4 {
     margin-right: 13px;
 }
 
 .select-admin:hover,
-.select-uji-kelayakan:hover {
+.select-uji-kelayakan:hover,
+.select-laporan:hover {
     background: #0077b6;
     color: #fff;
 }
 
-.select-admin-clicked {
+.select-admin-clicked,
+.select-uji-kelayakan-clicked,
+.select-laporan-clicked {
     background: #0077b6;
 }
 
@@ -407,7 +414,8 @@ nav {
 }
 
 .menu-admin,
-.menu-uji-kelayakan {
+.menu-uji-kelayakan,
+.menu-laporan {
     list-style: none;
     padding: 10px;
     background: #0077b6;
@@ -424,13 +432,15 @@ nav {
 }
 
 .menu-admin a,
-.menu-uji-kelayakan a {
+.menu-uji-kelayakan a,
+.menu-laporan a {
     color: #fff;
     text-decoration: none;
 }
 
 .menu-admin li,
-.menu-uji-kelayakan li {
+.menu-uji-kelayakan li,
+.menu-laporan li {
     padding: 10px;
     cursor: pointer;
     width: 100%;
@@ -438,13 +448,15 @@ nav {
 }
 
 .menu-admin li:hover,
-.menu-uji-kelayakan li:hover {
+.menu-uji-kelayakan li:hover,
+.menu-laporan li:hover {
     background: #fff;
     color: #0077b6;
 }
 
 .menu-admin-open,
-.menu-uji-kelayakan-open {
+.menu-uji-kelayakan-open,
+.menu-laporan-open {
     display: block;
     opacity: 1;
 }

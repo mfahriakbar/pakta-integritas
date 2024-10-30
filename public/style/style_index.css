@@ -1409,6 +1409,12 @@ input:required {
 
 /* faq end*/
 
+.ContainerDumas {
+    padding: 30px;
+    width: 70%;
+    margin: 0 auto;
+}
+
 /* spg */
 
 .ContainerSpg {

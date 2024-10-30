@@ -1,6 +1,6 @@
 @extends('layouts.user')
 
-@section('title', 'Form Absensi Kegiatan')
+@section('title', 'Form Rekaman Kegiatan')
 
 @section('content')
     {{-- loading --}}

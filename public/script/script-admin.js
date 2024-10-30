@@ -16,18 +16,21 @@ function togglePasswordVisibility() {
     });
 }
 
-const dropdowns = document.querySelectorAll(".dropdown-admin, .dropdown-uji-kelayakan");
+const dropdowns = document.querySelectorAll(".dropdown-admin, .dropdown-uji-kelayakan, .dropdown-laporan");
 
 dropdowns.forEach((dropdown) => {
-    const select = dropdown.querySelector(".select-admin, .select-uji-kelayakan");
+    const select = dropdown.querySelector(".select-admin, .select-uji-kelayakan, .select-laporan");
     const caret = dropdown.querySelector(".fa-caret-down");
-    const menu = dropdown.querySelector(".menu-admin, .menu-uji-kelayakan");
-    const options = dropdown.querySelectorAll(".menu-admin li, .menu-uji-kelayakan li");
-    const selected = dropdown.querySelector(".selected, .selected-uji-kelayakan");
+    const menu = dropdown.querySelector(".menu-admin, .menu-uji-kelayakan, .menu-laporan");
+    const options = dropdown.querySelectorAll(".menu-admin li, .menu-uji-kelayakan li, .menu-laporan li");
+    const selected = dropdown.querySelector(".selected, .selected-uji-kelayakan, .selected-laporan");
     const accountSettings = document.querySelector(".box-admin-akun");
 
     const loadSelectedOption = () => {
-        const savedOption = localStorage.getItem(dropdown.classList.contains("dropdown-admin") ? "selectedOption" : "selectedUjiKelayakanOption");
+        const key = dropdown.classList.contains("dropdown-admin") ? "selectedOption" :
+                    dropdown.classList.contains("dropdown-uji-kelayakan") ? "selectedUjiKelayakanOption" :
+                    "selectedLaporanOption";
+        const savedOption = localStorage.getItem(key);
         if (savedOption) {
             selected.innerText = savedOption;
             options.forEach((option) => {
@@ -45,9 +48,13 @@ dropdowns.forEach((dropdown) => {
     select.addEventListener("click", () => {
         select.classList.toggle("select-admin-clicked");
         caret.classList.toggle("fa-caret-down-rotate");
-        menu.classList.toggle(dropdown.classList.contains("dropdown-admin") ? "menu-admin-open" : "menu-uji-kelayakan-open");
+        menu.classList.toggle(dropdown.classList.contains("dropdown-admin") ? "menu-admin-open" :
+                               dropdown.classList.contains("dropdown-uji-kelayakan") ? "menu-uji-kelayakan-open" :
+                               "menu-laporan-open");
 
-        accountSettings.style.marginTop = menu.classList.contains("menu-admin-open") || menu.classList.contains("menu-uji-kelayakan-open")
+        accountSettings.style.marginTop = menu.classList.contains("menu-admin-open") || 
+                                           menu.classList.contains("menu-uji-kelayakan-open") || 
+                                           menu.classList.contains("menu-laporan-open")
             ? `${menu.offsetHeight}px`
             : "0";
     });
@@ -55,11 +62,16 @@ dropdowns.forEach((dropdown) => {
     options.forEach((option) => {
         option.addEventListener("click", () => {
             selected.innerText = option.innerText;
-            localStorage.setItem(dropdown.classList.contains("dropdown-admin") ? "selectedOption" : "selectedUjiKelayakanOption", option.innerText);
+            const key = dropdown.classList.contains("dropdown-admin") ? "selectedOption" :
+                        dropdown.classList.contains("dropdown-uji-kelayakan") ? "selectedUjiKelayakanOption" :
+                        "selectedLaporanOption";
+            localStorage.setItem(key, option.innerText);
 
             select.classList.remove("select-admin-clicked");
             caret.classList.remove("fa-caret-down-rotate");
-            menu.classList.remove(dropdown.classList.contains("dropdown-admin") ? "menu-admin-open" : "menu-uji-kelayakan-open");
+            menu.classList.remove(dropdown.classList.contains("dropdown-admin") ? "menu-admin-open" :
+                                  dropdown.classList.contains("dropdown-uji-kelayakan") ? "menu-uji-kelayakan-open" :
+                                  "menu-laporan-open");
 
             accountSettings.style.marginTop = "0";
 
@@ -80,8 +92,10 @@ menusToReset.forEach((menu) => {
     menu.addEventListener("click", () => {
         localStorage.setItem("selectedOption", "Pakta Integritas");
         localStorage.setItem("selectedUjiKelayakanOption", "Uji Kelayakan");
+        localStorage.setItem("selectedLaporanOption", "Default Laporan");
     });
 });
+
 
 
 document.addEventListener("DOMContentLoaded", function () {

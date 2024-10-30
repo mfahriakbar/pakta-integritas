@@ -8,6 +8,7 @@ use App\Http\Controllers\StudiKelayakanController;
 use App\Http\Controllers\K3Controller;
 use App\Http\Controllers\FkpController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\DumasController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Middleware\AdminMiddleware;
@@ -57,7 +58,15 @@ Route::get('/faq', function () {
     return view('faq');
 });
 
-Route::get('/absensi', function () {
+Route::get('/Rekaman', function () {
+    return view('absen');
+});
+
+Route::get('/Laporan-&-Monev-Dumas', function () {
+    return view('monev-dumas');
+});
+
+Route::get('/Rekaman', function () {
     return view('absen');
 });
 
@@ -83,8 +92,11 @@ Route::prefix('user')->group(function () {
     // Rute untuk menyimpan laporan K3 (dapat diakses oleh user biasa)
     Route::post('/lapork3/store', [K3Controller::class, 'store'])->name('lapork3.submit.user');
 
-    // Rute untuk menyimpan laporan K3 (dapat diakses oleh user biasa)
+    // Rute untuk menyimpan laporan Rekaman (dapat diakses oleh user biasa)
     Route::post('/absensi/store', [ActivityController::class, 'store'])->name('absen.store');
+    
+    // Rute untuk menyimpan laporan Dumas (dapat diakses oleh user biasa)
+    Route::post('/dumas/store', [DumasController::class, 'store'])->name('dumas.store');
 });
 
 
@@ -167,6 +179,17 @@ Route::middleware(AdminMiddleware::class)->prefix('admin')->group(function () {
     Route::get('/absen/export/{status?}', [ActivityController::class, 'export'])->name('absen.export');
     Route::get('/absen/{id}/download-pdf', [ActivityController::class, 'downloadPdf'])->name('absen.downloadPdf');
     Route::get('/absen/view-laporan/{id}', [ActivityController::class, 'viewLaporan'])->name('absen.viewLaporan');
+    
+    //Routes Absen
+    Route::get('/dumas', [DumasController::class, 'index'])->name('dumas.index');
+    Route::get('/dumas/create', [DumasController::class, 'create'])->name('dumas.add');
+    Route::post('/dumas/store', [DumasController::class, 'store'])->name('dumas.store');
+    Route::get('/dumas/edit/{id}', [DumasController::class, 'edit'])->name('dumas.edit');
+    Route::put('/dumas/{id}', [DumasController::class, 'update'])->name('dumas.update');
+    Route::delete('/dumas/{id}', [DumasController::class, 'destroy'])->name('dumas.destroy');
+    Route::get('/dumas/export/{status?}', [DumasController::class, 'export'])->name('dumas.export');
+    Route::get('/dumas/{id}/download-pdf', [DumasController::class, 'downloadPdf'])->name('dumas.downloadPdf');
+    Route::get('/dumas/view-laporan/{id}', [DumasController::class, 'viewLaporan'])->name('dumas.viewLaporan');
 
     Route::get('/{role?}', [PaktaIntegritasController::class, 'index'])->name('admin.role');
     Route::post('/add/{role}', [PaktaIntegritasController::class, 'store'])->name('integritas.store.admin');

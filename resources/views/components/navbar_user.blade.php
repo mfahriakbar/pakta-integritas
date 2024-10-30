@@ -48,7 +48,8 @@
                         Eksternal</a></li>
                 <li><a href="/Pelatihan">Pelatihan</a></li>
                 <li><a href="/Survei">Survei</a></li>
-                <li><a href="/absensi">Absensi</a></li>
+                <li><a href="/Rekaman">Rekaman Kegiatan</a></li>
+                <li><a href="/Laporan-&-Monev-Dumas">Laporan & Monev Dumas</a></li>
             </ul>
         </li>
         <li class="dropdown">
@@ -65,17 +66,7 @@
                 <li><a href="https://sites.google.com/view/smapbpmsph/kebijakan-sasaran/struktur">Struktur</a></li>
             </ul>
         </li>
-        <li class="dropdown">
-            <div class="dropdown-i">
-                <a href="https://sites.google.com/view/smapbpmsph/pedoman-dan-prosedur-mi">Eviden</a>
-                <i class="fa-solid fa-caret-down"></i>
-            </div>
-            <ul class="dropdown-content">
-                <li><a href="https://sites.google.com/view/smapbpmsph/eviden/eviden-45001">Eviden 45001</a></li>
-                <li><a href="https://sites.google.com/view/smapbpmsph/eviden/eviden-9001">Eviden 9001</a></li>
-                <li><a href="https://sites.google.com/view/smapbpmsph/eviden/eviden-37001">Eviden 37001</a></li>
-                <li><a href="https://sites.google.com/view/smapbpmsph/eviden/manual-sni-iso">Manual SNI ISO</a></li>
-            </ul>
+        <li> <a href="https://simin.bpmsph.org/">Login</a>
         </li>
         </li>
         <li> <a href="/web" class="{{ request()->is('web') ? 'active' : '' }}">Web</a>
