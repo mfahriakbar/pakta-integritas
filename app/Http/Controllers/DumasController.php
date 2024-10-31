@@ -196,7 +196,6 @@ class DumasController extends Controller
 
     public function downloadPdf($id)
     {
-        ini_set('memory_limit', '1G'); // Increase to 1GB
 
         try {
             $dumas = Dumas::with('complaints')->findOrFail($id);
