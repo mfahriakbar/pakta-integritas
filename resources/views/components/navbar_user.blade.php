@@ -50,6 +50,7 @@
                 <li><a href="/Survei">Survei</a></li>
                 <li><a href="/Rekaman">Rekaman Kegiatan</a></li>
                 <li><a href="/Laporan-&-Monev-Dumas">Laporan & Monev Dumas</a></li>
+                <li><a href="/Laporan-Benturan">Laporan Benturan Kepentingan</a></li>
             </ul>
         </li>
         <li class="dropdown">

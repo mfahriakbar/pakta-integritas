@@ -158,6 +158,15 @@ Route::middleware(AdminMiddleware::class)->prefix('admin')->group(function () {
     Route::delete('/spip/{id}', [SpiPController::class, 'destroy'])->name('spip.destroy');
     Route::get('/spip/export', [SpiPController::class, 'export'])->name('spip.export');
 
+    Route::get('/benturan/add', [BenturanController::class, 'create'])->name('benturan.add');
+    Route::post('/benturan/store', [BenturanController::class, 'store'])->name('benturan.submit');
+    Route::get('/benturan', [BenturanController::class, 'Index'])->name('benturan.index');
+    Route::get('/benturan/export/excel', [BenturanController::class, 'exportExcel'])->name('benturan.export');
+    Route::get('/benturan/export/pdf/{id}', [BenturanController::class, 'downloadPdf'])->name('benturan.pdf');
+    Route::get('/benturan/edit/{id}', [BenturanController::class, 'edit'])->name('benturan.edit');
+    Route::put('/benturan/{id}', [BenturanController::class, 'update'])->name('benturan.update');
+    Route::delete('/benturan/{id}', [BenturanController::class, 'destroy'])->name('benturan.destroy');
+
     // FKP Routes
     Route::get('/fkp/add', [FkpController::class, 'create'])->name('fkp.add');
     Route::post('/fkp/store', [FkpController::class, 'store'])->name('fkp.submit');
@@ -192,14 +201,14 @@ Route::middleware(AdminMiddleware::class)->prefix('admin')->group(function () {
 
     //Uji Kelayakan PenyediaJasa
     Route::get('/penyediaJasa', [PenyediaJasaController::class, 'index'])->name('penyedia-jasa.index');
-    Route::get('/penyedia-jasa/create', [PenyediaJasaController::class, 'create'])->name('penyedia-jasa.add');
-    Route::post('/penyedia-jasa/store', [PenyediaJasaController::class, 'store'])->name('penyedia-jasa.store');
-    Route::get('/penyedia-jasa/edit/{id}', [PenyediaJasaController::class, 'edit'])->name('penyedia-jasa.edit');
-    Route::put('/penyedia-jasa/{id}', [PenyediaJasaController::class, 'update'])->name('penyedia-jasa.update');
-    Route::delete('/penyedia-jasa/{id}', [PenyediaJasaController::class, 'destroy'])->name('penyedia-jasa.destroy');
-    Route::get('/penyedia-jasa/export/{status?}', [PenyediaJasaController::class, 'export'])->name('penyedia-jasa.export');
-    Route::get('/penyedia-jasa/download-pdf/{id}', [PenyediaJasaController::class, 'downloadPdf'])->name('penyedia-jasa.downloadPdf');
-    Route::get('/penyedia-jasa/view-laporan/{id}', [PenyediaJasaController::class, 'viewLaporan'])->name('penyedia-jasa.viewLaporan');
+    Route::get('/penyediajasa/create', [PenyediaJasaController::class, 'create'])->name('penyedia-jasa.add');
+    Route::post('/penyediajasa/store', [PenyediaJasaController::class, 'store'])->name('penyedia-jasa.store');
+    Route::get('/penyediajasa/edit/{id}', [PenyediaJasaController::class, 'edit'])->name('penyedia-jasa.edit');
+    Route::put('/penyediajasa/{id}', [PenyediaJasaController::class, 'update'])->name('penyedia-jasa.update');
+    Route::delete('/penyediajasa/{id}', [PenyediaJasaController::class, 'destroy'])->name('penyedia-jasa.destroy');
+    Route::get('/penyediajasa/export/{status?}', [PenyediaJasaController::class, 'export'])->name('penyedia-jasa.export');
+    Route::get('/penyediajasa/download-pdf/{id}', [PenyediaJasaController::class, 'downloadPdf'])->name('penyedia-jasa.downloadPdf');
+    Route::get('/penyediajasa/view-laporan/{id}', [PenyediaJasaController::class, 'viewLaporan'])->name('penyedia-jasa.viewLaporan');
     
     //Routes Absen
     Route::get('/absen', [ActivityController::class, 'index'])->name('absen.index');

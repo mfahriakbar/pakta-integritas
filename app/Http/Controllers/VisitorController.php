@@ -11,6 +11,8 @@ class VisitorController extends Controller
 {
     public function record(): JsonResponse
     {
+        \Log::info('Mencoba merekam pengunjung');
+
         try {
             $sessionId = session()->getId();
             $today = today();

@@ -11,13 +11,8 @@ return new class extends Migration
         Schema::create('dumas', function (Blueprint $table) {
             $table->id();
             $table->string('month');
-            $table->unsignedBigInteger('created_by')->nullable();
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
-            
-            $table->foreign('created_by')
-                  ->references('id')
-                  ->on('users')
-                  ->onDelete('set null');
         });
     }
 

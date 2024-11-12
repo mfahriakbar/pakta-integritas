@@ -10,17 +10,12 @@ return new class extends Migration
     {
         Schema::create('dumas_complaints', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('dumas_id');
+            $table->foreignId('dumas_id')->constrained()->onDelete('cascade');
             $table->string('complaint_channel');
             $table->string('complaint_type')->nullable();
             $table->text('handling')->nullable();
             $table->string('remarks');
             $table->timestamps();
-
-            $table->foreign('dumas_id')
-                  ->references('id')
-                  ->on('dumas')
-                  ->onDelete('cascade');
         });
     }
 

@@ -92,7 +92,7 @@ menusToReset.forEach((menu) => {
     menu.addEventListener("click", () => {
         localStorage.setItem("selectedOption", "Pakta Integritas");
         localStorage.setItem("selectedUjiKelayakanOption", "Uji Kelayakan");
-        localStorage.setItem("selectedLaporanOption", "Default Laporan");
+        localStorage.setItem("selectedLaporanOption", "Laporan");
     });
 });
 

@@ -69,6 +69,9 @@
             <a href="/admin/fkp">
                 <li>Lapor FKP</li>
             </a>
+            <a href="/admin/benturan">
+                <li>Lapor benturan</li>
+            </a>
         </ul>
     </div>
     
@@ -82,6 +85,12 @@
         <div class="box-admin-akun">
             <i class="fas fa-file-alt"></i>
             <h4>Dumas</h4>
+        </div>
+    </a>
+    <a href="/admin/spip">
+        <div class="box-admin-akun">
+            <i class="fas fa-file-alt"></i>
+            <h4>SPI-P</h4>
         </div>
     </a>
     <a href="{{ route('admin.account') }}">

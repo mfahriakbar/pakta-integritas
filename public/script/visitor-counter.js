@@ -1,7 +1,12 @@
 function updateVisitorStats() {
+    console.log('Updating visitor stats...');
     fetch('/visitors/record', {
         method: 'POST',
-    })
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+    })       
     .then(response => response.json())
     .then(data => {
         if (data.success) {

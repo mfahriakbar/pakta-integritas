@@ -9,10 +9,9 @@ class Dumas extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['month', 'created_by'];
-    
-    protected $casts = [
-        'created_by' => 'integer',
+    protected $fillable = [
+        'month',
+        'created_by'
     ];
 
     public function complaints()

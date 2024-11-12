@@ -24,7 +24,7 @@ class AdminSeeder extends Seeder
             [
                 'name' => 'fahri',
                 'email' => 'fahrightful@gmail.com',
-                'password' => Hash::make('raply'),
+                'password' => Hash::make('pacit'),
             ],
         ];
 

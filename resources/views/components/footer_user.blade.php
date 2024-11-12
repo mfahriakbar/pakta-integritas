@@ -14,7 +14,7 @@
                 <li><p><i class="fa-solid fa-user-clock"></i> Pengunjung Hari Ini: <span id="todayVisitors">0</span></p></li>
                 <li><p><i class="fa-solid fa-user-friends"></i> Pengunjung Kemarin: <span id="yesterdayVisitors">0</span></p></li>
             </ul>
-        </div>
+        </div>        
         <div class="footer-sosmed">
             <h3>Sosial Media & Chat</h3>
             <ul>

@@ -1,7 +1,4 @@
 <div class="down-btn">
-    <a href="{{ route('dumas.add') }}">
-        <button class="btn-tambah">Tambah</button>
-    </a>
     <a href="{{ route('dumas.export') }}">
         <button class="btn-export">Export Excel</button>
     </a>
